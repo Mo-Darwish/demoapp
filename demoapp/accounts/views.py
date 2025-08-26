@@ -4,10 +4,25 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.contrib.auth.models import User
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from accounts.serializers import UserRegistrationSerializer
 from .forms import RegisterForm , ResetPasswordForm
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
-from rest_framework.response import Response
+
+
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = UserRegistrationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+
+
+
+# -------- OLD ___________
 
 # JWT
 
@@ -29,8 +44,9 @@ def register_view(request):
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
             user = User.objects.create_user(username=username, password=password)
-            token = get_tokens_for_user(user)
-            return Response(token)
+            # JWT - token = get_tokens_for_user(user)
+            login(request, user)
+            return redirect('home')
     else:
         form = RegisterForm()
     return render(request, 'accounts/register.html', {'form':form})
@@ -57,7 +73,7 @@ def logout_view(request):
     else:
         return redirect('home')
 
-def reset_password_view(request) :
+def reset_password_view(request):
   error = None
   if request.method == "POST" :
     # send an email to reset the password
