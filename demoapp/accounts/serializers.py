@@ -2,7 +2,8 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from rest_framework.validators import UniqueValidator
-
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     """
@@ -29,6 +30,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def validate(self , data ) :
       password = data.get('password')
       confirm_password = data.get('confirm_password')
+      try:
+          validate_password(password)
+      except ValidationError as e:
+            raise serializers.ValidationError(e.messages)
       if password != confirm_password:
         raise serializers.ValidationError("Passwords do not match!")
       return data
