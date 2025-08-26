@@ -10,14 +10,18 @@ from accounts.serializers import UserRegistrationSerializer
 from .forms import RegisterForm , ResetPasswordForm
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
+from rest_framework import status
 
 
 class RegisterView(APIView):
+    authentication_classes = []
+    throttle_scope = 'register'
     def post(self, request):
         serializer = UserRegistrationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        user = serializer.save()
+        token = get_tokens_for_user(user)
+        return Response(token , status=status.HTTP_201_CREATED)
 
 
 
@@ -64,7 +68,6 @@ def login_view(request) :
     else:
       error = "Invalid credentials"
   return render(request , 'accounts/login.html' , {'error': error})
-
 
 def logout_view(request):
     if request.method == "POST":

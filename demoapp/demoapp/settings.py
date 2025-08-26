@@ -56,11 +56,15 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
-        'rest_framework.throttling.UserRateThrottle'
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.ScopedRateThrottle',
+
+
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '2/day',
-        'user': '2/day'
+        'anon': '10/day',
+        'user': '100/day',
+        'register' : '5/day',
     }
 }
 
