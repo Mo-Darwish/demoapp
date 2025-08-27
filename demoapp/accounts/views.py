@@ -6,13 +6,18 @@ from django.views import View
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from accounts.serializers import UserRegistrationSerializer, LogInSerializer
-from .forms import RegisterForm , ResetPasswordForm
+from accounts.serializers import UserRegistrationSerializer, LogInSerializer , ResetPasswordViaEmailSerializer, UpdatePasswordSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-
+# ---
+from django.core.mail import send_mail
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 class RegisterView(APIView):
     authentication_classes = []
     throttle_scope = 'register'
@@ -53,6 +58,46 @@ class LogoutView(APIView):
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+# ---- password reset
+
+class PasswordTokenCheckAPIView(APIView):
+    def get(self, request, uidb64,token):
+            id= smart_str(urlsafe_base64_decode(uidb64))
+            user= User.objects.get(id=id)
+            if not PasswordResetTokenGenerator().check_token(user,token):
+                return Response({'error':'token is not valid, please check the new one'},status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'sucess':True, 'message':'Credential Valid','uidb64':uidb64, 'token':token},status=status.HTTP_200_OK)
+
+class UpdatePassword(APIView):
+    serializer_class = UpdatePasswordSerializer
+    def put(self , request) :
+      serializer = self.serializer_class(request.user , data = request.data)
+      print(request.data)
+      serializer.is_valid(raise_exception = True)
+      serializer.save()
+      return Response({'sucess':True, 'message':'Password is reset successfully'},status=status.HTTP_200_OK)
+
+class RequestPasswordResetEmail(APIView):
+    serializer_class=ResetPasswordViaEmailSerializer
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        email = serializer.data['email']
+
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
+            uidb64 = urlsafe_base64_encode(smart_bytes(user.id) )
+            token = PasswordResetTokenGenerator().make_token(user)
+
+            current_site=get_current_site(request=request).domain
+            realtivelink = reverse('password-reset',kwargs={'uidb64':uidb64,'token':token})
+
+            absurl='http://'+current_site+realtivelink
+            email_body='Hi, \nUse link below to reset your password \n' + absurl
+            send_mail('reset your password' , email_body , "from@example.com" , [user.email])
+        return Response({'successfully':'check your email to reset your password'},status=status.HTTP_200_OK)
+
 # -------- OLD ___________
 
 # JWT
@@ -68,40 +113,7 @@ def get_tokens_for_user(user):
         'access': str(refresh.access_token),
     }
 # Create your views here.
-def register_view(request):
-    if request.method == "POST":
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
-            user = User.objects.create_user(username=username, password=password)
-            # JWT - token = get_tokens_for_user(user)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = RegisterForm()
-    return render(request, 'accounts/register.html', {'form':form})
 
-def login_view(request) :
-  error = None
-  if request.method == "POST" :
-    username = request.POST.get("username")
-    password = request.POST.get("password")
-    user = authenticate(request , username = username , password = password)
-    if user is not None :
-      login(request, user)
-      next_url = 'home'
-      return redirect(next_url)
-    else:
-      error = "Invalid credentials"
-  return render(request , 'accounts/login.html' , {'error': error})
-
-def logout_view(request):
-    if request.method == "POST":
-        logout(request)
-        return redirect('login')
-    else:
-        return redirect('home')
 
 def reset_password_view(request):
   error = None
@@ -122,7 +134,3 @@ def reset_password_view(request):
   return render(request , 'accounts/reset_password.html' , {'form':form , 'error' : error} )
 
 
-
-# @login_required
-def home_view(request) :
-  return render(request , 'accounts/home.html')

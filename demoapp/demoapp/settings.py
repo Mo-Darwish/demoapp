@@ -53,6 +53,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
