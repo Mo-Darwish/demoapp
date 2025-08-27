@@ -18,6 +18,7 @@ from django.urls import reverse
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.core import serializers
 class RegisterView(APIView):
     authentication_classes = []
     throttle_scope = 'register'
@@ -66,7 +67,7 @@ class PasswordTokenCheckAPIView(APIView):
             user= User.objects.get(id=id)
             if not PasswordResetTokenGenerator().check_token(user,token):
                 return Response({'error':'token is not valid, please check the new one'},status=status.HTTP_401_UNAUTHORIZED)
-            return Response({'sucess':True, 'message':'Credential Valid','uidb64':uidb64, 'token':token},status=status.HTTP_200_OK)
+            return Response({'sucess':True, 'message':serializers.serialize("json", [user]),'uidb64':uidb64, 'token':token},status=status.HTTP_200_OK)
 
 class UpdatePassword(APIView):
     serializer_class = UpdatePasswordSerializer
@@ -114,23 +115,5 @@ def get_tokens_for_user(user):
     }
 # Create your views here.
 
-
-def reset_password_view(request):
-  error = None
-  if request.method == "POST" :
-    # send an email to reset the password
-    form = ResetPasswordForm(request.POST)
-    if form.is_valid() :
-      email = form.cleaned_data.get("email")
-      password = form.cleaned_data.get("password")
-      user = User.objects.get(email=email)
-      user.set_password(password)
-      user.save()
-      update_session_auth_hash(request, user)
-      return redirect('login')
-
-  else :
-      form = ResetPasswordForm()
-  return render(request , 'accounts/reset_password.html' , {'form':form , 'error' : error} )
 
 
