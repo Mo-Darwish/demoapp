@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-
+from django.contrib.auth import authenticate
 class UserRegistrationSerializer(serializers.ModelSerializer):
     """
     Serializer for user registration.
@@ -18,9 +18,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         required=True,
     )
     email = serializers.EmailField(
-        write_only=True,
         required=True,
-          validators=[UniqueValidator(queryset=User.objects.all(), message="This email address is already in use.")]
+          validators=[UniqueValidator(queryset=User.objects.all(), message="Invalid Email!")]
     )
     username = serializers.CharField(required = True ,validators=[UniqueValidator(queryset=User.objects.all(), message="This username is already in use.")]
 )
@@ -45,3 +44,28 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             email=validated_data['email']
         )
         return user
+
+class LogInSerializer(serializers.ModelSerializer):
+    """
+    Serializer for user registration.
+    """
+    password = serializers.CharField(
+        required=True,
+    )
+    username = serializers.CharField(required = True )
+
+    class Meta:
+        model = User
+        fields = ('username','password' )
+    def validate(self, attrs):
+        username = attrs.get('username')
+        password = attrs.get('password')
+        print(username , password)
+        # user = authenticate(request=self.context.get('request'), username=username, password=password)
+        # print("user object : " , user)
+        # if user is  None :
+        #     raise serializers.ValidationError({"status": "error", "message": "Username or password doesn't match. Please try again."})
+
+        # if not user.is_active:
+        #     raise serializers.ValidationError({"status": "error", "message": "Account not verified."})
+        return attrs

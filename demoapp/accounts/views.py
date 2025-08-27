@@ -6,7 +6,7 @@ from django.views import View
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from accounts.serializers import UserRegistrationSerializer
+from accounts.serializers import UserRegistrationSerializer, LogInSerializer
 from .forms import RegisterForm , ResetPasswordForm
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
@@ -19,10 +19,27 @@ class RegisterView(APIView):
     def post(self, request):
         serializer = UserRegistrationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        token = get_tokens_for_user(user)
-        return Response(token , status=status.HTTP_201_CREATED)
+        serializer.save()
 
+        return Response(serializer.data , status=status.HTTP_201_CREATED)
+
+
+class LoginView(APIView) :
+  authentication_class = []
+  def post(self, request) :
+    serializer = LogInSerializer(data = request.data , context={'request': request})
+    serializer.is_valid(raise_exception = True)
+    # print("the data from serializer : " , serializer.data)
+    user = authenticate(request , username = serializer.data['username'] , password = serializer.data['password'])
+
+    if user is  None :
+            raise serializer.ValidationError({"status": "error", "message": "Username or password doesn't match. Please try again."})
+
+    if not user.is_active:
+            raise serializer.ValidationError({"status": "error", "message": "Account not verified."})
+
+    token = get_tokens_for_user(user)
+    return Response(token , status=status.HTTP_201_CREATED)
 
 
 
