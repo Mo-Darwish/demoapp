@@ -62,22 +62,25 @@ class LogoutView(APIView):
 # ---- password reset
 
 class PasswordTokenCheckAPIView(APIView):
-    def get(self, request, uidb64,token):
+    serializer_class = UpdatePasswordSerializer
+    def put(self, request, uidb64,token):
             id= smart_str(urlsafe_base64_decode(uidb64))
             user= User.objects.get(id=id)
             if not PasswordResetTokenGenerator().check_token(user,token):
                 return Response({'error':'token is not valid, please check the new one'},status=status.HTTP_401_UNAUTHORIZED)
-            return Response({'sucess':True, 'message':serializers.serialize("json", [user]),'uidb64':uidb64, 'token':token},status=status.HTTP_200_OK)
+            serializer = self.serializer_class(request.user , data = request.data)
+            serializer.is_valid(raise_exception = True)
+            serializer.save()
+            return Response({'sucess':True, 'message':'Password is reset successfully'},status=status.HTTP_200_OK)
 
 class UpdatePassword(APIView):
+    authentication_class = [IsAuthenticated]
     serializer_class = UpdatePasswordSerializer
     def put(self , request) :
       serializer = self.serializer_class(request.user , data = request.data)
-      print(request.data)
       serializer.is_valid(raise_exception = True)
       serializer.save()
-      return Response({'sucess':True, 'message':'Password is reset successfully'},status=status.HTTP_200_OK)
-
+      return Response({'sucess':True, 'message':'Password is changed successfully'},status=status.HTTP_200_OK)
 class RequestPasswordResetEmail(APIView):
     serializer_class=ResetPasswordViaEmailSerializer
     def post(self, request):
@@ -99,8 +102,6 @@ class RequestPasswordResetEmail(APIView):
             send_mail('reset your password' , email_body , "from@example.com" , [user.email])
         return Response({'successfully':'check your email to reset your password'},status=status.HTTP_200_OK)
 
-# -------- OLD ___________
-
 # JWT
 
 def get_tokens_for_user(user):
@@ -113,7 +114,6 @@ def get_tokens_for_user(user):
         'refresh': str(refresh),
         'access': str(refresh.access_token),
     }
-# Create your views here.
 
 
 
