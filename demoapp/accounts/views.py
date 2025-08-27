@@ -11,7 +11,7 @@ from .forms import RegisterForm , ResetPasswordForm
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from rest_framework import status
-
+from rest_framework.permissions import IsAuthenticated
 
 class RegisterView(APIView):
     authentication_classes = []
@@ -31,7 +31,6 @@ class LoginView(APIView) :
     serializer.is_valid(raise_exception = True)
     # print("the data from serializer : " , serializer.data)
     user = authenticate(request , username = serializer.data['username'] , password = serializer.data['password'])
-
     if user is  None :
             raise serializer.ValidationError({"status": "error", "message": "Username or password doesn't match. Please try again."})
 
@@ -42,6 +41,17 @@ class LoginView(APIView) :
     return Response(token , status=status.HTTP_201_CREATED)
 
 
+class LogoutView(APIView):
+    # authentication_class = [IsAuthenticated]
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # -------- OLD ___________
 
