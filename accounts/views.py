@@ -20,7 +20,7 @@ class RegisterView(APIView):
     authentication_classes = []
     throttle_scope = 'register'
     def post(self, request):
-        if   request.version  == "v1" :
+        if   request.version  != "v1" :
             return Response({"message": f"API Version: {request.version}"} , status=status.HTTP_400_BAD_REQUEST)
         serializer = UserRegistrationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

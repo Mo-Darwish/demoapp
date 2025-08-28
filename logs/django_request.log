@@ -40,3 +40,4 @@ AssertionError: Expected a `Response`, `HttpResponse` or `StreamingHttpResponse`
 [2025-08-28 13:36:08,845] INFO django.request: MyView GET called by user AnonymousUser
 [2025-08-28 13:36:08,863] WARNING django.request: Bad Request: /
 [2025-08-28 13:36:08,967] WARNING django.request: Not Found: /favicon.ico
+[2025-08-28 13:54:58,813] WARNING django.request: Not Found: /accounts/login/
