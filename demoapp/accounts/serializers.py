@@ -29,12 +29,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def validate(self , data ) :
       password = data.get('password')
       confirm_password = data.get('confirm_password')
-      try:
-          validate_password(password)
-      except ValidationError as e:
-            raise serializers.ValidationError(e.messages)
-      if password != confirm_password:
-        raise serializers.ValidationError("Passwords do not match!")
+      password_validation(password , confirm_password)
       return data
 
     def create(self, validated_data):
@@ -103,12 +98,7 @@ class UpdatePasswordSerializer(serializers.ModelSerializer):
     def validate(self , data ) :
       password = data.get('password')
       confirm_password = data.get('confirm_password')
-      try:
-          validate_password(password)
-      except ValidationError as e:
-            raise serializers.ValidationError(e.messages)
-      if password != confirm_password:
-        raise serializers.ValidationError("Passwords do not match!")
+      password_validation(password , confirm_password)
       return data
 
     def update(self, instance, validated_data):
@@ -116,5 +106,14 @@ class UpdatePasswordSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return instance
+
+
+def password_validation(password , confirm_password) :
+    try:
+          validate_password(password)
+    except ValidationError as e:
+            raise serializers.ValidationError(e.messages)
+    if password != confirm_password:
+        raise serializers.ValidationError("Passwords do not match!")
 
 
