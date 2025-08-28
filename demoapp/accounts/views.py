@@ -96,9 +96,11 @@ class RequestPasswordResetEmail(APIView):
             token = PasswordResetTokenGenerator().make_token(user)
 
             current_site=get_current_site(request=request).domain
-            realtivelink = reverse('password-reset',kwargs={'uidb64':uidb64,'token':token})
+            realtivelink = reverse('v1:password-reset',kwargs={'uidb64':uidb64,'token':token})
 
             absurl='http://'+current_site+realtivelink
+            # absurl='http://'+''
+
             email_body='Hi, \nUse link below to reset your password \n' + absurl
             send_mail('reset your password' , email_body , "from@example.com" , [user.email])
         return Response({'successfully':'check your email to reset your password'},status=status.HTTP_200_OK)

@@ -56,13 +56,6 @@ class LogInSerializer(serializers.ModelSerializer):
         username = attrs.get('username')
         password = attrs.get('password')
         print(username , password)
-        # user = authenticate(request=self.context.get('request'), username=username, password=password)
-        # print("user object : " , user)
-        # if user is  None :
-        #     raise serializers.ValidationError({"status": "error", "message": "Username or password doesn't match. Please try again."})
-
-        # if not user.is_active:
-        #     raise serializers.ValidationError({"status": "error", "message": "Account not verified."})
         return attrs
 
 
