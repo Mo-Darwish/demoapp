@@ -34,3 +34,9 @@ AssertionError: Expected a `Response`, `HttpResponse` or `StreamingHttpResponse`
 [2025-08-28 06:43:45,578] WARNING django.request: Bad Request: /api/v1/auth/jwt/register/
 [2025-08-28 06:45:31,548] WARNING django.request: Bad Request: /api/v1/auth/jwt/register/
 [2025-08-28 06:46:15,909] WARNING django.request: Method Not Allowed: /api/v1/auth/jwt/register/
+[2025-08-28 13:35:46,012] WARNING django.request: Bad Request: /
+[2025-08-28 13:35:46,068] WARNING django.request: Bad Request: /favicon.ico
+[2025-08-28 13:36:08,845] CRITICAL django.request: Platform is running at risk
+[2025-08-28 13:36:08,845] INFO django.request: MyView GET called by user AnonymousUser
+[2025-08-28 13:36:08,863] WARNING django.request: Bad Request: /
+[2025-08-28 13:36:08,967] WARNING django.request: Not Found: /favicon.ico
