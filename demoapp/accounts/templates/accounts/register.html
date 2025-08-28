@@ -1,8 +1,0 @@
-<p>Hello You can register here</p>
-<div class="container">
-  <form method="POST" action="{% url 'register' %}">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">register</button>
-  </form>
-</div>
