@@ -5,9 +5,9 @@ from django.conf import settings
 
 urlpatterns = [
   path('auth/jwt/register/' , views.RegisterView.as_view()),
-  path('auth/jwt/login/' , views.LoginView.as_view()) ,
+path('auth/jwt/login/' , views.LoginView.as_view()) ,
   path('auth/jwt/logout/' , views.LogoutView.as_view()),
-  path('auth/jwt/reset/' , views.RequestPasswordResetEmail.as_view()),
+  path('auth/jwt/password-reset/' , views.RequestPasswordResetEmail.as_view()),
   path('auth/jwt/password-reset/<uidb64>/<token>/',views.PasswordTokenCheckAPIView.as_view(),name='password-reset'),
   path('auth/jwt/password-change/', views.UpdatePassword.as_view())
   # add for experimenting

@@ -34,3 +34,126 @@ AssertionError: Expected a `Response`, `HttpResponse` or `StreamingHttpResponse`
 [2025-08-28 06:43:45,578] WARNING django.request: Bad Request: /api/v1/auth/jwt/register/
 [2025-08-28 06:45:31,548] WARNING django.request: Bad Request: /api/v1/auth/jwt/register/
 [2025-08-28 06:46:15,909] WARNING django.request: Method Not Allowed: /api/v1/auth/jwt/register/
+[2025-08-28 06:59:05,527] WARNING django.request: Method Not Allowed: /api/v1/auth/jwt/reset/
+[2025-08-28 06:59:17,052] WARNING django.request: Not Found: /api/v1/auth/jwt/change/
+[2025-08-28 06:59:31,132] WARNING django.request: Method Not Allowed: /api/v1/auth/jwt/password-change/
+[2025-08-28 06:59:40,922] WARNING django.request: Bad Request: /api/v1/auth/jwt/password-change/
+[2025-08-28 06:59:50,756] WARNING django.request: Bad Request: /api/v1/auth/jwt/password-change/
+[2025-08-28 07:05:16,810] WARNING django.request: Method Not Allowed: /api/v1/auth/jwt/reset/
+[2025-08-28 07:05:24,986] WARNING django.request: Bad Request: /api/v1/auth/jwt/reset/
+[2025-08-28 07:07:47,043] ERROR django.request: Internal Server Error: /api/v1/auth/jwt/reset/
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/accounts/views.py", line 99, in post
+    realtivelink = reverse('password-reset',kwargs={'uidb64':uidb64,'token':token})
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'password-reset' not found. 'password-reset' is not a valid view function or pattern name.
+[2025-08-28 07:08:56,049] WARNING django.request: Not Found: /api/v1/auth/jwt/reset/
+[2025-08-28 07:09:05,427] WARNING django.request: Method Not Allowed: /api/v1/auth/jwt/password-reset/
+[2025-08-28 07:09:09,523] ERROR django.request: Internal Server Error: /api/v1/auth/jwt/password-reset/
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/accounts/views.py", line 99, in post
+    realtivelink = reverse('password-reset',kwargs={'uidb64':uidb64,'token':token})
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'password-reset' not found. 'password-reset' is not a valid view function or pattern name.
+[2025-08-28 07:31:46,967] WARNING django.request: Not Found: /api/token/
+[2025-08-28 07:32:01,212] WARNING django.request: Not Found: /api/token/
+[2025-08-28 07:32:07,155] WARNING django.request: Not Found: /accounts/api/v1/auth/jwt/token/verify/
+[2025-08-28 07:42:56,075] WARNING django.request: Not Found: /accounts/password-reset/NQ/cv729b-4c9b0427db9948a854faa4fbb85636ab/
+[2025-08-28 07:42:56,116] WARNING django.request: Not Found: /favicon.ico
+[2025-08-28 07:43:31,770] WARNING django.request: Not Found: /api/v1/password-reset/NQ/cv729b-4c9b0427db9948a854faa4fbb85636ab/
+[2025-08-28 07:43:54,150] WARNING django.request: Not Found: /api/v1/ auth/jwt/password-reset/NQ/cv729b-4c9b0427db9948a854faa4fbb85636ab/
+[2025-08-28 07:44:07,497] WARNING django.request: Method Not Allowed: /api/v1/auth/jwt/password-reset/NQ/cv729b-4c9b0427db9948a854faa4fbb85636ab/
+[2025-08-28 07:46:29,247] ERROR django.request: Internal Server Error: /api/v1/auth/jwt/password-reset/
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/accounts/views.py", line 99, in post
+    realtivelink = reverse('/api/v1/auth/jwt/password-reset',kwargs={'uidb64':uidb64,'token':token})
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/djangoapp/demoapp/path/to/venv/lib/python3.13/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for '/api/v1/auth/jwt/password-reset' not found. '/api/v1/auth/jwt/password-reset' is not a valid view function or pattern name.
+[2025-08-28 09:30:09,131] CRITICAL django.request: Platform is running at risk
+[2025-08-28 09:30:09,131] INFO django.request: MyView GET called by user AnonymousUser
+[2025-08-28 09:30:09,139] WARNING django.request: Bad Request: /
+[2025-08-28 09:37:56,852] CRITICAL django.request: Platform is running at risk
+[2025-08-28 09:37:56,852] INFO django.request: MyView GET called by user AnonymousUser
+[2025-08-28 09:37:56,860] WARNING django.request: Bad Request: /
+[2025-08-28 09:43:48,194] WARNING django.request: Bad Request: /
+[2025-08-28 09:43:48,252] WARNING django.request: Bad Request: /favicon.ico
+[2025-08-28 09:44:04,196] CRITICAL django.request: Platform is running at risk
+[2025-08-28 09:44:04,197] INFO django.request: MyView GET called by user AnonymousUser
+[2025-08-28 09:44:04,212] WARNING django.request: Bad Request: /
+[2025-08-28 09:50:30,389] CRITICAL django.request: Platform is running at risk
+[2025-08-28 09:50:30,389] INFO django.request: MyView GET called by user AnonymousUser
+[2025-08-28 09:50:30,407] WARNING django.request: Bad Request: /
+[2025-08-28 09:50:43,286] WARNING django.request: Not Found: /accounts/
+[2025-08-28 09:50:54,172] WARNING django.request: Not Found: /accounts/api/v1/auth/jwt/reset
+[2025-08-28 09:51:04,050] WARNING django.request: Not Found: /accounts/api/v1/
+[2025-08-28 09:55:14,175] WARNING django.request: Bad Request: /
+[2025-08-28 09:55:14,232] WARNING django.request: Bad Request: /favicon.ico
+[2025-08-28 09:55:41,787] CRITICAL django.request: Platform is running at risk
+[2025-08-28 09:55:41,788] INFO django.request: MyView GET called by user AnonymousUser
+[2025-08-28 09:55:41,803] WARNING django.request: Bad Request: /
