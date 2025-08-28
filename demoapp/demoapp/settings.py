@@ -66,7 +66,9 @@ REST_FRAMEWORK = {
         'anon': '10/day',
         'user': '100/day',
         'register' : '5/day',
-    }
+    } ,
+        'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning'
+
 }
 
 MIDDLEWARE = [

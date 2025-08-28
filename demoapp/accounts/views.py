@@ -1,8 +1,5 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import View
+from django.contrib.auth import authenticate
+
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -16,13 +13,15 @@ from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
+from django.utils.encoding import smart_str, smart_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.core import serializers
 class RegisterView(APIView):
     authentication_classes = []
     throttle_scope = 'register'
     def post(self, request):
+        if   request.version  == "v1" :
+            return Response({"message": f"API Version: {request.version}"} , status=status.HTTP_400_BAD_REQUEST)
         serializer = UserRegistrationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -33,6 +32,8 @@ class RegisterView(APIView):
 class LoginView(APIView) :
   authentication_class = []
   def post(self, request) :
+    if   request.version  != "v1" :
+        return Response({"message": f"API Version: {request.version}, it should be v1"} , status=status.HTTP_400_BAD_REQUEST)
     serializer = LogInSerializer(data = request.data , context={'request': request})
     serializer.is_valid(raise_exception = True)
     # print("the data from serializer : " , serializer.data)

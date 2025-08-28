@@ -23,7 +23,7 @@ urlpatterns = [
     path('', include('myapp.urls')), # include your app urls.py here
     # path('auth/', include('django.contrib.auth.urls')),
     path('api-auth/', include('rest_framework.urls')),
-    path('accounts/' , include('accounts.urls')),
+    path('api/v1/', include(('accounts.urls' , 'accounts') , namespace = 'v1')),
 
     # path('accounts/login/' , views.login_view, name = 'login'),
     # path('accounts/register/' , views.register_view, name = 'register'),
