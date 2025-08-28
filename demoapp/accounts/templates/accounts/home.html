@@ -9,6 +9,8 @@
         {% csrf_token %}
         <button type="submit">Logout</button>
       </form>
+      <p>Reset Password Here <a href="{% url 'reset_password' %}">Reset</a></p>
+
     </div>
   </body>
 
