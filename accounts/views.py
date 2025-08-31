@@ -54,7 +54,7 @@ class LoginView(APIView) :
 
 class LogoutView(APIView):
     # authentication_class = [IsAuthenticated]
-    # @swagger_auto_schema(request_body=UserRegistrationSerializer)
+    # @swagger_auto_schema(manual_parameters = "refresh_token")
     def post(self, request):
         try:
             refresh_token = request.data["refresh_token"]

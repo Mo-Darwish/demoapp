@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
    'drf_yasg',
+   'sale_order',
 
 ]
 REST_FRAMEWORK = {
@@ -241,4 +242,15 @@ LOGGING = {
             'propagate': False
         },
     },
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'JWT Authorization header using the Bearer scheme. Example: "Authorization: Bearer <token>"',
+        }
+    }
 }
