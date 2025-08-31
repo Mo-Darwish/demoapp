@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
-
+   'drf_yasg',
 
 ]
 REST_FRAMEWORK = {
@@ -63,9 +63,9 @@ REST_FRAMEWORK = {
 
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '10/day',
+        'anon': '100/day',
         'user': '100/day',
-        'register' : '5/day',
+        'register' : '10/day',
     } ,
         'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning'
 

@@ -41,3 +41,27 @@ AssertionError: Expected a `Response`, `HttpResponse` or `StreamingHttpResponse`
 [2025-08-28 13:36:08,863] WARNING django.request: Bad Request: /
 [2025-08-28 13:36:08,967] WARNING django.request: Not Found: /favicon.ico
 [2025-08-28 13:54:58,813] WARNING django.request: Not Found: /accounts/login/
+[2025-08-30 19:11:48,170] CRITICAL django.request: Platform is running at risk
+[2025-08-30 19:11:48,170] INFO django.request: MyView GET called by user AnonymousUser
+[2025-08-30 19:11:48,179] WARNING django.request: Bad Request: /
+[2025-08-30 19:11:48,247] WARNING django.request: Not Found: /favicon.ico
+[2025-08-30 19:11:55,346] WARNING django.request: Not Found: /auth
+[2025-08-30 19:12:04,341] WARNING django.request: Not Found: /api/v1
+[2025-08-30 19:12:13,297] WARNING django.request: Not Found: /api/v1/
+[2025-08-30 19:30:14,144] WARNING django.request: Not Found: /api/v1/
+[2025-08-30 19:30:31,334] WARNING django.request: Not Found: /accounts/login/
+[2025-08-31 06:25:02,512] CRITICAL django.request: Platform is running at risk
+[2025-08-31 06:25:02,512] INFO django.request: MyView GET called by user AnonymousUser
+[2025-08-31 06:25:02,524] WARNING django.request: Bad Request: /
+[2025-08-31 06:25:02,597] WARNING django.request: Not Found: /favicon.ico
+[2025-08-31 06:25:52,020] CRITICAL django.request: Platform is running at risk
+[2025-08-31 06:25:52,020] INFO django.request: MyView GET called by user AnonymousUser
+[2025-08-31 06:25:52,036] WARNING django.request: Bad Request: /
+[2025-08-31 06:28:03,279] WARNING django.request: Bad Request: /api/v1/auth/jwt/reset/
+[2025-08-31 06:28:29,600] WARNING django.request: Bad Request: /api/v1/auth/jwt/login/
+[2025-08-31 06:29:38,082] WARNING django.request: Bad Request: /api/v1/auth/jwt/login/
+[2025-08-31 06:36:14,047] WARNING django.request: Unauthorized: /api/v1/auth/jwt/token/verify/
+[2025-08-31 06:41:24,272] WARNING django.request: Bad Request: /api/v1/auth/jwt/logout/
+[2025-08-31 06:43:56,889] WARNING django.request: Bad Request: /api/v1/auth/jwt/register/
+[2025-08-31 06:49:29,249] WARNING django.request: Not Found: /accounts/login/
+[2025-08-31 06:56:02,276] WARNING django.request: Bad Request: /api/v1/auth/jwt/register/

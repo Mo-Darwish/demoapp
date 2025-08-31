@@ -16,9 +16,12 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, smart_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.core import serializers
+from drf_yasg.utils import swagger_auto_schema
+
 class RegisterView(APIView):
     authentication_classes = []
     throttle_scope = 'register'
+    @swagger_auto_schema(request_body=UserRegistrationSerializer)
     def post(self, request):
         if   request.version  != "v1" :
             return Response({"message": f"API Version: {request.version}"} , status=status.HTTP_400_BAD_REQUEST)
@@ -31,6 +34,7 @@ class RegisterView(APIView):
 
 class LoginView(APIView) :
   authentication_class = []
+  @swagger_auto_schema(request_body=LogInSerializer)
   def post(self, request) :
     if   request.version  != "v1" :
         return Response({"message": f"API Version: {request.version}, it should be v1"} , status=status.HTTP_400_BAD_REQUEST)
@@ -50,6 +54,7 @@ class LoginView(APIView) :
 
 class LogoutView(APIView):
     # authentication_class = [IsAuthenticated]
+    # @swagger_auto_schema(request_body=UserRegistrationSerializer)
     def post(self, request):
         try:
             refresh_token = request.data["refresh_token"]
@@ -64,6 +69,8 @@ class LogoutView(APIView):
 
 class PasswordTokenCheckAPIView(APIView):
     serializer_class = UpdatePasswordSerializer
+    @swagger_auto_schema(request_body=UpdatePasswordSerializer)
+
     def put(self, request, uidb64,token):
             id= smart_str(urlsafe_base64_decode(uidb64))
             user= User.objects.get(id=id)
@@ -77,6 +84,7 @@ class PasswordTokenCheckAPIView(APIView):
 class UpdatePassword(APIView):
     authentication_class = [IsAuthenticated]
     serializer_class = UpdatePasswordSerializer
+    @swagger_auto_schema(request_body=UpdatePasswordSerializer)
     def put(self , request) :
       serializer = self.serializer_class(request.user , data = request.data)
       serializer.is_valid(raise_exception = True)
@@ -84,6 +92,7 @@ class UpdatePassword(APIView):
       return Response({'sucess':True, 'message':'Password is changed successfully'},status=status.HTTP_200_OK)
 class RequestPasswordResetEmail(APIView):
     serializer_class=ResetPasswordViaEmailSerializer
+    @swagger_auto_schema(request_body=ResetPasswordViaEmailSerializer)
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)

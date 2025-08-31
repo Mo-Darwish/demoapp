@@ -17,13 +17,28 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path , include
 from accounts import views
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Your API Title",
+        default_version='v1',
+        description="API documentation",
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('myapp.urls')), # include your app urls.py here
     # path('auth/', include('django.contrib.auth.urls')),
-    path('api-auth/', include('rest_framework.urls')),
+    path('api-auth/', include('rest_framework.urls') ),
     path('api/v1/', include(('accounts.urls' , 'accounts') , namespace = 'v1')),
+    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+
 
     # path('accounts/login/' , views.login_view, name = 'login'),
     # path('accounts/register/' , views.register_view, name = 'register'),
