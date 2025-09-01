@@ -78,7 +78,7 @@ class PasswordTokenCheckAPIView(APIView):
     serializer_class = UpdatePasswordSerializer
     @swagger_auto_schema(request_body=UpdatePasswordSerializer)
 
-    def put(self, request, uidb64,token):
+    def patch(self, request, uidb64,token):
             id= smart_str(urlsafe_base64_decode(uidb64))
             user= User.objects.get(id=id)
             if not PasswordResetTokenGenerator().check_token(user,token):
@@ -95,7 +95,7 @@ class UpdatePassword(APIView):
         request_body=UpdatePasswordSerializer,
         security=[{'Bearer': []}]
     )
-    def put(self , request) :
+    def patch(self , request) :
       serializer = self.serializer_class(request.user , data = request.data)
       serializer.is_valid(raise_exception = True)
       serializer.save()
