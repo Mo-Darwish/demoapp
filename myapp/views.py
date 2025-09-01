@@ -5,14 +5,16 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import UserSerializer
 # Create your views here.
+from drf_yasg.utils import swagger_auto_schema
 
 import logging
 
 logger = logging.getLogger("django.request")
 class Home(APIView):
     authentication_classes = [JWTAuthentication]
-
-
+    @swagger_auto_schema(
+        security=[{'Bearer': []}]
+    )
     def get(self, request):
         if request.user.is_authenticated:
             content = {'message': 'Hello, World!'}

@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from accounts.serializers import UserRegistrationSerializer, LogInSerializer , ResetPasswordViaEmailSerializer, UpdatePasswordSerializer
+from accounts.serializers import LogoutSerializer, UserRegistrationSerializer, LogInSerializer , ResetPasswordViaEmailSerializer, UpdatePasswordSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from rest_framework import status
@@ -16,7 +16,9 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, smart_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.core import serializers
+# Imports for drf-yasg
 from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 class RegisterView(APIView):
     authentication_classes = []
@@ -53,17 +55,22 @@ class LoginView(APIView) :
 
 
 class LogoutView(APIView):
-    # authentication_class = [IsAuthenticated]
-    # @swagger_auto_schema(manual_parameters = "refresh_token")
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['refresh_token'],
+            properties={
+                'refresh_token': openapi.Schema(type=openapi.TYPE_STRING, description="The refresh token to be blacklisted.")
+            },
+        )
+    )
     def post(self, request):
-        try:
-            refresh_token = request.data["refresh_token"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
+        # Use the serializer to validate the request data
+        serializer = LogoutSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-            return Response(status=status.HTTP_205_RESET_CONTENT)
-        except Exception as e:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_205_RESET_CONTENT)
 
 # ---- password reset
 
@@ -84,7 +91,10 @@ class PasswordTokenCheckAPIView(APIView):
 class UpdatePassword(APIView):
     authentication_class = [IsAuthenticated]
     serializer_class = UpdatePasswordSerializer
-    @swagger_auto_schema(request_body=UpdatePasswordSerializer)
+    @swagger_auto_schema(
+        request_body=UpdatePasswordSerializer,
+        security=[{'Bearer': []}]
+    )
     def put(self , request) :
       serializer = self.serializer_class(request.user , data = request.data)
       serializer.is_valid(raise_exception = True)
