@@ -1,11 +1,13 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from .services import OrderService
+from .service import OrderService
 from .serializers import OrderDetailSerializer
 
 class OrderViewSet(viewsets.GenericViewSet):
     serializer_class = OrderDetailSerializer
+    def get_queryset(self):
+        return Orders_details.objects.none()
 
     @action(detail=False, methods=['get'], url_path='completion-rates')
     def list_completion_rates(self, request):
@@ -33,5 +35,5 @@ class OrderViewSet(viewsets.GenericViewSet):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        serializer = self.get_serializer(queryset.first())
+        serializer = self.get_serializer(queryset.order_by('sale_order_id').first())
         return Response(serializer.data)
