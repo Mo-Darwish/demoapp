@@ -401,3 +401,288 @@ Traceback (most recent call last):
     ) , precision= 2)
     ^^^^^^^^^^^^^^^^^
 TypeError: Round.__init__() missing 1 required positional argument: 'expression'
+[2025-09-02 11:50:28,341] ERROR django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/response.py", line 111, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/drf_yasg/renderers.py", line 79, in render
+    return render_to_string(self.template, renderer_context, renderer_context['request'])
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 54, in render
+    result = self.nodelist.render(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 116, in render
+    url = self.url(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 113, in url
+    return self.handle_simple(path)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 129, in handle_simple
+    return staticfiles_storage.url(path)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 203, in url
+    return self._url(self.stored_name, name, force)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 182, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 513, in stored_name
+    raise ValueError(
+        "Missing staticfiles manifest entry for '%s'" % clean_name
+    )
+ValueError: Missing staticfiles manifest entry for 'drf-yasg/swagger-ui-dist/favicon-32x32.png'
+[2025-09-02 11:50:29,806] ERROR django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/response.py", line 111, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/drf_yasg/renderers.py", line 79, in render
+    return render_to_string(self.template, renderer_context, renderer_context['request'])
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 54, in render
+    result = self.nodelist.render(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 116, in render
+    url = self.url(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 113, in url
+    return self.handle_simple(path)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 129, in handle_simple
+    return staticfiles_storage.url(path)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 203, in url
+    return self._url(self.stored_name, name, force)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 182, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 513, in stored_name
+    raise ValueError(
+        "Missing staticfiles manifest entry for '%s'" % clean_name
+    )
+ValueError: Missing staticfiles manifest entry for 'drf-yasg/swagger-ui-dist/favicon-32x32.png'
+[2025-09-02 11:51:57,914] ERROR django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/response.py", line 111, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/drf_yasg/renderers.py", line 79, in render
+    return render_to_string(self.template, renderer_context, renderer_context['request'])
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 54, in render
+    result = self.nodelist.render(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 116, in render
+    url = self.url(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 113, in url
+    return self.handle_simple(path)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 129, in handle_simple
+    return staticfiles_storage.url(path)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 203, in url
+    return self._url(self.stored_name, name, force)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 182, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 513, in stored_name
+    raise ValueError(
+        "Missing staticfiles manifest entry for '%s'" % clean_name
+    )
+ValueError: Missing staticfiles manifest entry for 'drf-yasg/swagger-ui-dist/favicon-32x32.png'
+[2025-09-02 11:53:29,607] ERROR django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/response.py", line 111, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/drf_yasg/renderers.py", line 79, in render
+    return render_to_string(self.template, renderer_context, renderer_context['request'])
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 54, in render
+    result = self.nodelist.render(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 116, in render
+    url = self.url(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 113, in url
+    return self.handle_simple(path)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 129, in handle_simple
+    return staticfiles_storage.url(path)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 203, in url
+    return self._url(self.stored_name, name, force)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 182, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 513, in stored_name
+    raise ValueError(
+        "Missing staticfiles manifest entry for '%s'" % clean_name
+    )
+ValueError: Missing staticfiles manifest entry for 'drf-yasg/swagger-ui-dist/favicon-32x32.png'
+[2025-09-02 11:53:30,502] ERROR django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/response.py", line 111, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/drf_yasg/renderers.py", line 79, in render
+    return render_to_string(self.template, renderer_context, renderer_context['request'])
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 54, in render
+    result = self.nodelist.render(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 116, in render
+    url = self.url(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 113, in url
+    return self.handle_simple(path)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 129, in handle_simple
+    return staticfiles_storage.url(path)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 203, in url
+    return self._url(self.stored_name, name, force)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 182, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 513, in stored_name
+    raise ValueError(
+        "Missing staticfiles manifest entry for '%s'" % clean_name
+    )
+ValueError: Missing staticfiles manifest entry for 'drf-yasg/swagger-ui-dist/favicon-32x32.png'
