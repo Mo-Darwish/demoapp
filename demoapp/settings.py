@@ -160,8 +160,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# This is where collectstatic will put everything
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# This tells Django where to find additional static files during collectstatic
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 STORAGES = {
     # ...

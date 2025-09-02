@@ -7,7 +7,7 @@ from .serializers import OrderDetailSerializer
 class OrderViewSet(viewsets.GenericViewSet):
     serializer_class = OrderDetailSerializer
     def get_queryset(self):
-        return Orders_details.objects.none()
+        return True
 
     @action(detail=False, methods=['get'], url_path='completion-rates')
     def list_completion_rates(self, request):
