@@ -20,7 +20,7 @@ class OrdersDetailsSerializer(serializers.ModelSerializer):
       order_qty = data.get('order_quantity')
       if order_qty < 0 :
         raise serializers.ValidationError("Not A Valid Order")
-      elif order_qty < (data.get('stockexchange_quantity') + data.get('quantity_at_market')) :
+      elif data.get('stockexchange_quantity') == (data.get('quantity_post_market') + data.get('quantity_at_market')) :
          raise serializers.ValidationError("Requested quantity is more than the order quantity")
       else :
         return data
