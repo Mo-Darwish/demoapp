@@ -1,6 +1,25 @@
+from django.utils import timezone
 from django.db import models
 
 # Create your models here.
+
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        abstract = True  # no DB table for this model
+
+    def soft_delete(self):
+        """method to soft-delete the record."""
+        self.deleted_at = timezone.now()
+        self.save()
+
+    def restore(self):
+        """Restore a soft-deleted record."""
+        self.deleted_at = None
+        self.save()
 class Payments(models.Model) :
   company_branch_id = models.IntegerField()
   credit = models.DecimalField(decimal_places=2, max_digits=10 , null=True)
@@ -37,6 +56,41 @@ class Orders_details(models.Model) :
 
   class Meta :
     verbose_name = "Order Details"
+
+class SaleOrder(BaseModel):
+    status = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = "Sale Order"
+
+
+class ItemSaleOrder(BaseModel):
+    sale_order = models.ForeignKey(
+        SaleOrder,
+        on_delete=models.CASCADE,
+        related_name='items'
+    )
+    brand_item_id = models.IntegerField()
+    quantity = models.IntegerField()
+
+    class Meta:
+        verbose_name = "Item Sale Order"
+
+
+class StockExchange(BaseModel):
+    sale_order = models.ForeignKey(
+        SaleOrder,
+        on_delete=models.CASCADE,
+        related_name='stock_exchanges'
+    )
+    brand_item_id = models.IntegerField()
+    quantity = models.IntegerField()
+
+    class Meta:
+        verbose_name = "Stock Exchange"
+
+
+
 
 
 
