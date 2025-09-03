@@ -1,4 +1,4 @@
-from .models import Orders_details
+from .models import Orders_details , SaleOrder , ItemSaleOrder , StockExchange
 from django.db.models import Sum, Case, When, F, FloatField
 from django.db.models.functions import Coalesce , Round
 
@@ -47,4 +47,14 @@ class OrderService:
             queryset = queryset.filter(sale_order_id=sale_order_id)
 
         return queryset
+
+
+class SaleOrderService :
+    @staticmethod
+    def create_sale_order(status : str) -> SaleOrder :
+        return SaleOrder.objects.create(status = status)
+
+    # def create_item_sale_order(* , status)
+
+
 

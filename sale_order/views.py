@@ -1,8 +1,8 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from .service import OrderService
-from .serializers import OrderDetailSerializer
+from .service import OrderService, SaleOrderService
+from .serializers import OrderDetailSerializer , InputSaleOrderSerializer
 # Imports for drf-yasg
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -79,3 +79,16 @@ class OrderViewSet(viewsets.GenericViewSet):
 
         serializer = self.get_serializer(queryset.order_by('sale_order_id').first())
         return Response(serializer.data)
+
+
+class SaleOrderView(viewsets.GenericViewSet) :
+    authentication_classes = []
+    serializer_class = InputSaleOrderSerializer
+    @swagger_auto_schema(request_body=InputSaleOrderSerializer)
+    def create(self, request):
+        if   request.version  != "v1" :
+            return Response({"message": f"API Version: {request.version}"} , status=status.HTTP_400_BAD_REQUEST)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        SaleOrderService.create_sale_order(**serializer.validated_data)
+        return Response(serializer.data , status=status.HTTP_201_CREATED)

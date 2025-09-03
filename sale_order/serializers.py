@@ -1,4 +1,4 @@
-from .models import Orders_details
+from .models import Orders_details , SaleOrder, ItemSaleOrder , StockExchange
 from rest_framework import serializers
 class OrdersDetailsSerializer(serializers.ModelSerializer):
     """
@@ -11,8 +11,6 @@ class OrdersDetailsSerializer(serializers.ModelSerializer):
     stockexchange_quantity = serializers.IntegerField()
     quantity_post_market = serializers.IntegerField()
     quantity_at_market = serializers.IntegerField()
-
-
     class Meta:
         model = Orders_details
         fields = ('sale_order_id', 'order_quantity', 'stockexchange_quantity', 'quantity_post_market', 'quantity_at_market')
@@ -32,3 +30,10 @@ class OrderDetailSerializer(serializers.Serializer):
     # These fields are still populated by the .annotate() in the view
     sale_order_id = serializers.IntegerField()
     completion_rate = serializers.FloatField(read_only=True)
+
+
+class InputSaleOrderSerializer(serializers.Serializer) :
+  """
+  Serializer for creating a sale order
+  """
+  status = serializers.CharField()
