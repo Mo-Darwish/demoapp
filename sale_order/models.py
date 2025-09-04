@@ -75,6 +75,8 @@ class ItemSaleOrder(BaseModel):
 
     class Meta:
         verbose_name = "Item Sale Order"
+        unique_together = ('sale_order', 'brand_item_id')
+
 
 
 class StockExchange(BaseModel):
@@ -88,6 +90,7 @@ class StockExchange(BaseModel):
 
     class Meta:
         verbose_name = "Stock Exchange"
+        unique_together = ('sale_order', 'brand_item_id')
 
 
 
