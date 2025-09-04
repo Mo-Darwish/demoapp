@@ -2,12 +2,13 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .service import OrderService, SaleOrderService
-from .serializers import OrderDetailSerializer , InputSaleOrderSerializer
+from .serializers import OrderDetailSerializer , InputSaleOrderSerializer , InputItemSaleOrderSerializer
 # Imports for drf-yasg
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 class OrderViewSet(viewsets.GenericViewSet):
     serializer_class = OrderDetailSerializer
+
     def get_queryset(self):
         return True
 
@@ -82,13 +83,37 @@ class OrderViewSet(viewsets.GenericViewSet):
 
 
 class SaleOrderView(viewsets.GenericViewSet) :
+
+    def get_queryset(self):
+        return True
     authentication_classes = []
     serializer_class = InputSaleOrderSerializer
+    serializer_class_by_action = {
+        "create_sale_order" : InputSaleOrderSerializer ,
+        "create_bulk_items" : InputItemSaleOrderSerializer
+
+    }
+    def get_serializer_class(self):
+        """
+        Pick serializer based on the current action name.
+        Defaults to `serializer_class` if not found in the dict.
+        """
+        return self.serializer_class_by_action[self.action]
+
     @swagger_auto_schema(request_body=InputSaleOrderSerializer)
-    def create(self, request):
+    @action(detail=False, methods=['post'])
+    def create_sale_order(self, request):
         if   request.version  != "v1" :
             return Response({"message": f"API Version: {request.version}"} , status=status.HTTP_400_BAD_REQUEST)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         SaleOrderService.create_sale_order(**serializer.validated_data)
         return Response(serializer.data , status=status.HTTP_201_CREATED)
+
+    @action(detail = False , methods = ['post'])
+    def create_bulk_items(self , request) :
+        serializer = self.get_serializer(data=request.data , many = True)
+        serializer.is_valid(raise_exception=True)
+        SaleOrderService.create_item_sale_order(serializer.validated_data)
+        return Response(serializer.data , status=status.HTTP_201_CREATED)
+

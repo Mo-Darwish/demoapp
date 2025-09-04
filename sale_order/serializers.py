@@ -37,3 +37,22 @@ class InputSaleOrderSerializer(serializers.Serializer) :
   Serializer for creating a sale order
   """
   status = serializers.CharField()
+
+class InputItemSaleOrderSerializer(serializers.Serializer) :
+  """
+  Serializer for creating item sale order
+  """
+  sale_order_id = serializers.IntegerField(required = True)
+  quantity = serializers.IntegerField(required = True)
+  brand_item_id = serializers.IntegerField(required = True)
+
+class InputStockExchangeSerializer(serializers.Serializer) :
+  """
+  Serializer for creating item sale order
+  """
+  sale_order_id = serializers.IntegerField(required = True)
+  quantity = serializers.IntegerField(required = True)
+  brand_item_id = serializers.IntegerField(required = True)
+
+
+

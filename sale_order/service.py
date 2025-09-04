@@ -53,8 +53,17 @@ class SaleOrderService :
     @staticmethod
     def create_sale_order(status : str) -> SaleOrder :
         return SaleOrder.objects.create(status = status)
+    @staticmethod
+    def create_item_sale_order(data : list[dict]) -> ItemSaleOrder :
+        items = [ItemSaleOrder(**item) for item in data]
+        return ItemSaleOrder.objects.bulk_create(items)
+    @staticmethod
+    def create_stockexchange_sale_order(data : list[dict]) -> ItemSaleOrder :
+        items = [StockExchange(**item) for item in data]
+        return StockExchange.objects.bulk_create(items)
 
-    # def create_item_sale_order(* , status)
+
+
 
 
 
