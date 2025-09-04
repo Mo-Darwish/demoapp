@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -160,8 +160,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# This is where collectstatic will put everything
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# This tells Django where to find additional static files during collectstatic
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 STORAGES = {
     # ...
