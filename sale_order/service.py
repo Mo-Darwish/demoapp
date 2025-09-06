@@ -49,6 +49,31 @@ class OrderService:
         return queryset
 
 
+class OrderServiceV2 :
+    @staticmethod
+    def get_orders_with_completion_rates(sale_order_id=None):
+        """
+        Get orders with completion rates - either single order or all orders
+        """
+        queryset = (
+            SaleOrder.objects
+            .values('id')
+            .annotate(
+                total_quantity=Sum('items__quantity'),
+                total_stockexchange=Coalesce(Sum('stock_exchanges__quantity'),0)
+            )
+            .annotate(
+                completion_rate= Round(Case(
+                    When(total_quantity__gt=0,
+                         then=(F('total_quantity') - F('total_stockexchange')) * 100.0 / F('total_quantity')),
+                    default=0.0,
+                    output_field=FloatField()
+                ) , precision= 2)
+            )
+        )
+        return queryset
+
+
 class SaleOrderService :
     @staticmethod
     def create_sale_order(status : str) -> SaleOrder :
@@ -56,6 +81,7 @@ class SaleOrderService :
     @staticmethod
     def create_item_sale_order(data : list[dict]) -> ItemSaleOrder :
         items = [ItemSaleOrder(**item) for item in data]
+
         return ItemSaleOrder.objects.bulk_create(items)
     @staticmethod
     def create_stockexchange_sale_order(data : list[dict]) -> ItemSaleOrder :

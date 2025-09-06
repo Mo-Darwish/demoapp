@@ -31,6 +31,13 @@ class OrderDetailSerializer(serializers.Serializer):
     sale_order_id = serializers.IntegerField()
     completion_rate = serializers.FloatField(read_only=True)
 
+class OrderDetailSerializerV2(serializers.Serializer):
+    """
+    Serializer for an Order with its completion rate.
+    """
+    # These fields are still populated by the .annotate() in the view
+    id = serializers.IntegerField()
+    completion_rate = serializers.FloatField(read_only=True)
 
 class InputSaleOrderSerializer(serializers.Serializer) :
   """
