@@ -3,7 +3,19 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.versioning import URLPathVersioning
 from .service import OrderService, SaleOrderService, OrderServiceV2
-from .serializers import ItemSaleOrderReadSerializer, OrderDetailSerializer , InputSaleOrderSerializer , InputItemSaleOrderSerializer , InputStockExchangeSerializer , OrderDetailSerializerV2, SaleOrderReadSerializer, StockExchangeReadSerializer
+from .serializers import (
+    ItemSaleOrderReadSerializer,
+    OrderDetailSerializer,
+    InputSaleOrderSerializer,
+    InputItemSaleOrderSerializer,
+    InputStockExchangeSerializer,
+    OrderDetailSerializerV2,
+    SaleOrderReadSerializer,
+    StockExchangeReadSerializer,
+    DeleteSaleOrderSerializer,
+    DeleteItemSaleOrderSerializer,
+    DeleteStockExchangeSaleOrderSerializer,
+)
 # Imports for drf-yasg
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -154,6 +166,47 @@ class SaleOrderView(viewsets.GenericViewSet) :
         queryset = StockExchange.objects.all()
         serializer = StockExchangeReadSerializer(queryset, many=True)
         return Response(serializer.data)
+
+    @swagger_auto_schema(request_body=DeleteSaleOrderSerializer)
+    @action(detail=False, methods=['delete'], url_path='delete_sale_order')
+    def delete_sale_order(self, request):
+        sale_order_id = request.data.get('sale_order_id')
+        if not sale_order_id:
+            return Response({'error': 'sale_order_id is required'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            sale_order = SaleOrder.objects.get(id=sale_order_id)
+            sale_order.soft_delete()
+            return Response({'status': 'success', 'message': f'SaleOrder {sale_order_id} soft deleted.'})
+        except SaleOrder.DoesNotExist:
+            return Response({'error': f'SaleOrder {sale_order_id} not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    @swagger_auto_schema(request_body=DeleteItemSaleOrderSerializer)
+    @action(detail=False, methods=['delete'], url_path='delete_item_sale_order')
+    def delete_item_sale_order(self, request):
+        sale_order_id = request.data.get('sale_order_id')
+        brand_item_id = request.data.get('brand_item_id')
+        if not sale_order_id or not brand_item_id:
+            return Response({'error': 'sale_order_id and brand_item_id are required'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            item = ItemSaleOrder.objects.get(sale_order_id=sale_order_id, brand_item_id=brand_item_id)
+            item.soft_delete()
+            return Response({'status': 'success', 'message': f'ItemSaleOrder {sale_order_id}-{brand_item_id} soft deleted.'})
+        except ItemSaleOrder.DoesNotExist:
+            return Response({'error': f'ItemSaleOrder {sale_order_id}-{brand_item_id} not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    @swagger_auto_schema(request_body=DeleteStockExchangeSaleOrderSerializer)
+    @action(detail=False, methods=['delete'], url_path='delete_stockexchange_sale_order')
+    def delete_stockexchange_sale_order(self, request):
+        sale_order_id = request.data.get('sale_order_id')
+        brand_item_id = request.data.get('brand_item_id')
+        if not sale_order_id or not brand_item_id:
+            return Response({'error': 'sale_order_id and brand_item_id are required'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            stock = StockExchange.objects.get(sale_order_id=sale_order_id, brand_item_id=brand_item_id)
+            stock.soft_delete()
+            return Response({'status': 'success', 'message': f'StockExchange {sale_order_id}-{brand_item_id} soft deleted.'})
+        except StockExchange.DoesNotExist:
+            return Response({'error': f'StockExchange {sale_order_id}-{brand_item_id} not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 def sale_order_ui(request):
     return render(request, 'sale_order.html')

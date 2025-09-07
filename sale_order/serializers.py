@@ -75,6 +75,16 @@ class StockExchangeReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockExchange
         fields = '__all__'
+class DeleteSaleOrderSerializer(serializers.Serializer):
+    sale_order_id = serializers.IntegerField(required=True)
+
+class DeleteItemSaleOrderSerializer(serializers.Serializer):
+    sale_order_id = serializers.IntegerField(required=True)
+    brand_item_id = serializers.IntegerField(required=True)
+
+class DeleteStockExchangeSaleOrderSerializer(serializers.Serializer):
+    sale_order_id = serializers.IntegerField(required=True)
+    brand_item_id = serializers.IntegerField(required=True)
 
 
 
