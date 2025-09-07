@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Sale Order Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+    }
+
+    h2 {
+      margin-top: 2em;
+    }
+
+    form {
+      margin-bottom: 2em;
+    }
+
+    label {
+      display: block;
+      margin-top: 0.5em;
+    }
+
+    input,
+    button {
+      margin-top: 0.5em;
+    }
+
+    .response {
+      margin-top: 1em;
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Sale Order Management</h1>
+
+  <h2>Create Sale Order</h2>
+  <form id="createSaleOrderForm">
+    <label>Status: <input type="text" name="status" required></label>
+    <button type="submit">Create Sale Order</button>
+  </form>
+  <div id="createSaleOrderResponse"></div>
+
+  <h2>Create Bulk Items</h2>
+  <form id="createBulkItemsForm">
+    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
+    <label>Quantity: <input type="number" name="quantity" required></label>
+    <label>Brand Item ID: <input type="number" name="brand_item_id" required></label>
+    <button type="submit">Add Item</button>
+  </form>
+  <div id="createBulkItemsResponse"></div>
+
+  <h2>Create Bulk Stock Exchange Items</h2>
+  <form id="createBulkStockExchangeForm">
+    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
+    <label>Quantity: <input type="number" name="quantity" required></label>
+    <label>Brand Item ID: <input type="number" name="brand_item_id" required></label>
+    <button type="submit">Add Stock Exchange Item</button>
+  </form>
+  <div id="createBulkStockExchangeResponse"></div>
+
+  <h2>Read Sale Orders</h2>
+  <button onclick="fetchSaleOrders()">Get Sale Orders</button>
+  <pre id="saleOrdersList"></pre>
+
+  <h2>Read Bulk Items</h2>
+  <button onclick="fetchBulkItems()">Get Bulk Items</button>
+  <pre id="bulkItemsList"></pre>
+
+  <h2>Read Bulk Stock Exchange Items</h2>
+  <button onclick="fetchBulkStockExchangeItems()">Get Bulk Stock Exchange Items</button>
+  <pre id="bulkStockExchangeItemsList"></pre>
+
+  <script>
+    // Helper function for POST requests
+    async function postForm(url, form, responseDiv, asArray = true) {
+      const data = Object.fromEntries(new FormData(form));
+      const payload = asArray ? [data] : data;
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const json = await res.json();
+        responseDiv.textContent = JSON.stringify(json, null, 2);
+        responseDiv.className = res.ok ? 'response' : 'error';
+      } catch (err) {
+        responseDiv.textContent = err;
+        responseDiv.className = 'error';
+      }
+    }
+
+    document.getElementById('createSaleOrderForm').onsubmit = function (e) {
+      e.preventDefault();
+      postForm('/api/v1/sale-orders/create_sale_order/', this, document.getElementById('createSaleOrderResponse'), false);
+    };
+    document.getElementById('createBulkItemsForm').onsubmit = function (e) {
+      e.preventDefault();
+      postForm('/api/v1/sale-orders/create_bulk_items/', this, document.getElementById('createBulkItemsResponse'));
+    };
+    document.getElementById('createBulkStockExchangeForm').onsubmit = function (e) {
+      e.preventDefault();
+      postForm('/api/v1/sale-orders/create_bulk_stockexchange_items/', this, document.getElementById('createBulkStockExchangeResponse'));
+    };
+
+    // Read endpoints
+    async function fetchSaleOrders() {
+      const res = await fetch('/api/v1/sale-orders/sale_orders/');
+      document.getElementById('saleOrdersList').textContent = await res.text();
+    }
+    async function fetchBulkItems() {
+      const res = await fetch('/api/v1/sale-orders/bulk_items/');
+      document.getElementById('bulkItemsList').textContent = await res.text();
+    }
+    async function fetchBulkStockExchangeItems() {
+      const res = await fetch('/api/v1/sale-orders/bulk_stockexchange_items/');
+      document.getElementById('bulkStockExchangeItemsList').textContent = await res.text();
+    }
+  </script>
+</body>
+
+</html>

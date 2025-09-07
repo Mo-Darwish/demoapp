@@ -8,6 +8,7 @@ from .serializers import ItemSaleOrderReadSerializer, OrderDetailSerializer , In
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from .models import SaleOrder, ItemSaleOrder, StockExchange
+from django.shortcuts import render
 
 class OrderViewSet(viewsets.GenericViewSet):
     serializer_class = OrderDetailSerializer
@@ -117,8 +118,6 @@ class SaleOrderView(viewsets.GenericViewSet) :
     @swagger_auto_schema(request_body=InputSaleOrderSerializer)
     @action(detail=False, methods=['post'])
     def create_sale_order(self, request):
-        if   request.version  != "v1" :
-            return Response({"message": f"API Version: {request.version}"} , status=status.HTTP_400_BAD_REQUEST)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         SaleOrderService.create_sale_order(**serializer.validated_data)
@@ -155,6 +154,9 @@ class SaleOrderView(viewsets.GenericViewSet) :
         queryset = StockExchange.objects.all()
         serializer = StockExchangeReadSerializer(queryset, many=True)
         return Response(serializer.data)
+
+def sale_order_ui(request):
+    return render(request, 'sale_order.html')
 
 
 
