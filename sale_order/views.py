@@ -3,10 +3,12 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.versioning import URLPathVersioning
 from .service import OrderService, SaleOrderService, OrderServiceV2
-from .serializers import OrderDetailSerializer , InputSaleOrderSerializer , InputItemSaleOrderSerializer , InputStockExchangeSerializer , OrderDetailSerializerV2
+from .serializers import ItemSaleOrderReadSerializer, OrderDetailSerializer , InputSaleOrderSerializer , InputItemSaleOrderSerializer , InputStockExchangeSerializer , OrderDetailSerializerV2, SaleOrderReadSerializer, StockExchangeReadSerializer
 # Imports for drf-yasg
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from .models import SaleOrder, ItemSaleOrder, StockExchange
+
 class OrderViewSet(viewsets.GenericViewSet):
     serializer_class = OrderDetailSerializer
 
@@ -135,6 +137,24 @@ class SaleOrderView(viewsets.GenericViewSet) :
         serializer.is_valid(raise_exception=True)
         SaleOrderService.create_stockexchange_sale_order(serializer.validated_data)
         return Response(serializer.data , status=status.HTTP_201_CREATED)
+
+    @action(detail=False, methods=['get'], url_path='sale_orders')
+    def list_sale_orders(self, request):
+        queryset = SaleOrder.objects.all()
+        serializer = SaleOrderReadSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path='bulk_items')
+    def list_bulk_items(self, request):
+        queryset = ItemSaleOrder.objects.all()
+        serializer = ItemSaleOrderReadSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path='bulk_stockexchange_items')
+    def list_bulk_stockexchange_items(self, request):
+        queryset = StockExchange.objects.all()
+        serializer = StockExchangeReadSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 

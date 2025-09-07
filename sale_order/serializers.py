@@ -61,5 +61,20 @@ class InputStockExchangeSerializer(serializers.Serializer) :
   quantity = serializers.IntegerField(required = True)
   brand_item_id = serializers.IntegerField(required = True)
 
+class SaleOrderReadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SaleOrder
+        fields = '__all__'
+
+class ItemSaleOrderReadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ItemSaleOrder
+        fields = '__all__'
+
+class StockExchangeReadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StockExchange
+        fields = '__all__'
+
 
 
