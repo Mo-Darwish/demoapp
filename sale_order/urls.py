@@ -18,6 +18,5 @@ v2_router.register("sale-orders", OrdersViewV2, basename="sale-orders-v2")
 urlpatterns = [
     path("v1/", include((v1_router.urls, 'sale_order'), namespace="v1")),
     path("v2/", include((v2_router.urls, 'sale_order'), namespace="v2")),
-    path('ui/', sale_order_ui, name='sale_order_ui'),
-
+    path('ui/', sale_order_ui, name='sale_order_ui')
 ]

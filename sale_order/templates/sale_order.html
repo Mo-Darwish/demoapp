@@ -204,6 +204,7 @@
       }
     }
 
+    // Sale Order Create
     document.getElementById('createSaleOrderForm').onsubmit = function (e) {
       e.preventDefault();
       postForm('/api/v1/sale-orders/create_sale_order/', this, document.getElementById('createSaleOrderResponse'), false);
@@ -232,7 +233,7 @@
       }
     }
 
-    // Bulk Items submit
+    // Bulk Items Create
     document.getElementById('createBulkItemsForm').onsubmit = function (e) {
       e.preventDefault();
       const rows = Array.from(document.querySelectorAll('#bulkItemsTableInput tbody tr'));
@@ -241,19 +242,26 @@
         quantity: row.querySelector('input[name="quantity"]').value,
         brand_item_id: row.querySelector('input[name="brand_item_id"]').value
       }));
-      fetch('/api/v1/sale-orders/create_bulk_items/', {
+      fetch('/api/v1/sale-orders/items/bulk/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       })
-        .then(res => res.json().then(json => ({ ok: res.ok, json })))
-        .then(({ ok, json }) => {
-          document.getElementById('createBulkItemsResponse').textContent = JSON.stringify(json, null, 2);
-          document.getElementById('createBulkItemsResponse').className = ok ? 'response' : 'error';
+        .then(async res => {
+          const contentType = res.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const json = await res.json();
+            document.getElementById('createBulkItemsResponse').textContent = JSON.stringify(json, null, 2);
+            document.getElementById('createBulkItemsResponse').className = res.ok ? 'response' : 'error';
+          } else {
+            const text = await res.text();
+            document.getElementById('createBulkItemsResponse').textContent = text;
+            document.getElementById('createBulkItemsResponse').className = 'error';
+          }
         });
     };
 
-    // Bulk Stock Exchange submit
+    // Bulk Stock Exchange Create
     document.getElementById('createBulkStockExchangeForm').onsubmit = function (e) {
       e.preventDefault();
       const rows = Array.from(document.querySelectorAll('#bulkStockExchangeTableInput tbody tr'));
@@ -262,15 +270,22 @@
         quantity: row.querySelector('input[name="quantity"]').value,
         brand_item_id: row.querySelector('input[name="brand_item_id"]').value
       }));
-      fetch('/api/v1/sale-orders/create_bulk_stockexchange_items/', {
+      fetch('/api/v1/sale-orders/stock-exchange/bulk/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       })
-        .then(res => res.json().then(json => ({ ok: res.ok, json })))
-        .then(({ ok, json }) => {
-          document.getElementById('createBulkStockExchangeResponse').textContent = JSON.stringify(json, null, 2);
-          document.getElementById('createBulkStockExchangeResponse').className = ok ? 'response' : 'error';
+        .then(async res => {
+          const contentType = res.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const json = await res.json();
+            document.getElementById('createBulkStockExchangeResponse').textContent = JSON.stringify(json, null, 2);
+            document.getElementById('createBulkStockExchangeResponse').className = res.ok ? 'response' : 'error';
+          } else {
+            const text = await res.text();
+            document.getElementById('createBulkStockExchangeResponse').textContent = text;
+            document.getElementById('createBulkStockExchangeResponse').className = 'error';
+          }
         });
     };
 
@@ -282,24 +297,96 @@
     }
 
     async function fetchBulkItems() {
-      const res = await fetch('/api/v1/sale-orders/bulk_items/');
+      const res = await fetch('/api/v1/sale-orders/items/');
       const json = await res.json();
       renderTable('bulkItemsTable', json);
     }
 
     async function fetchBulkStockExchangeItems() {
-      const res = await fetch('/api/v1/sale-orders/bulk_stockexchange_items/');
+      const res = await fetch('/api/v1/sale-orders/stock-exchange/');
       const json = await res.json();
       renderTable('bulkStockExchangeItemsTable', json);
     }
 
     // OrdersViewV2: Get all completion rates
-    // Helper to pretty-print JSON
-    function renderJsonResponse(elementId, data, ok = true) {
-      const el = document.getElementById(elementId);
-      el.textContent = JSON.stringify(data, null, 2);
-      el.parentElement.className = ok ? 'response' : 'error';
+    async function fetchOrderV2CompletionRates() {
+      const res = await fetch('/api/v2/sale-orders/completion-rates/');
+      const json = await res.json();
+      renderTable('orderV2CompletionRatesTable', json);
     }
+
+    // OrdersViewV2: Get completion rate for specific order
+    document.getElementById('orderV2CompletionRateForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const orderId = this.order_id.value;
+      const res = await fetch(`/api/v2/sale-orders/${orderId}/completion-rate/`);
+      const json = await res.json();
+      renderTable('orderV2CompletionRateTable', json);
+    };
+
+    // Delete Sale Order
+    document.getElementById('deleteSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const sale_order_id = this.sale_order_id.value;
+      const res = await fetch(`/api/v1/sale-orders/${sale_order_id}/stock-exchange/`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const json = await res.json();
+      renderTable('deleteSaleOrderResponse', json);
+    };
+
+    // Delete Item Sale Order
+    document.getElementById('deleteItemSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-order-items/item_sale_order/', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('deleteItemSaleOrderResponse', json);
+    };
+
+    // Delete Stock Exchange Sale Order
+    document.getElementById('deleteStockExchangeSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-order-items/stockexchange_sale_order/', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('deleteStockExchangeSaleOrderResponse', json);
+    };
+
+    // Update Item Sale Order
+    document.getElementById('updateItemSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-order-items/item_sale_order/', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('updateItemSaleOrderResponse', json);
+    };
+
+    // Update Stock Exchange Sale Order
+    document.getElementById('updateStockExchangeSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-order-items/stockexchange_sale_order/', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('updateStockExchangeSaleOrderResponse', json);
+    };
 
     function renderTable(elementId, data) {
       let html = '';
@@ -308,12 +395,10 @@
           html = '<p>No data found.</p>';
         } else {
           html = '<table><thead><tr>';
-          // Table headers
           Object.keys(data[0]).forEach(key => {
             html += `<th>${key}</th>`;
           });
           html += '</tr></thead><tbody>';
-          // Table rows
           data.forEach(row => {
             html += '<tr>';
             Object.values(row).forEach(val => {
@@ -334,86 +419,6 @@
       }
       document.getElementById(elementId).innerHTML = html;
     }
-
-    async function fetchOrderV2CompletionRates() {
-      const res = await fetch('/api/v2/sale-orders/completion-rates/');
-      const json = await res.json();
-      renderTable('orderV2CompletionRatesTable', json);
-    }
-
-    // OrdersViewV2: Get completion rate for specific order
-    document.getElementById('orderV2CompletionRateForm').onsubmit = async function (e) {
-      e.preventDefault();
-      const orderId = this.order_id.value;
-      const res = await fetch(`/api/v2/sale-orders/${orderId}/completion-rate/`);
-      const json = await res.json();
-      renderTable('orderV2CompletionRateTable', json);
-    };
-
-    // Delete Sale Order
-    document.getElementById('deleteSaleOrderForm').onsubmit = async function (e) {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(this));
-      const res = await fetch('/api/v1/sale-orders/delete_sale_order/', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      const json = await res.json();
-      renderTable('deleteSaleOrderResponse', json);
-    };
-
-    // Delete Item Sale Order
-    document.getElementById('deleteItemSaleOrderForm').onsubmit = async function (e) {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(this));
-      const res = await fetch('/api/v1/sale-orders/delete_item_sale_order/', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      const json = await res.json();
-      renderTable('deleteItemSaleOrderResponse', json);
-    };
-
-    // Delete Stock Exchange Sale Order
-    document.getElementById('deleteStockExchangeSaleOrderForm').onsubmit = async function (e) {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(this));
-      const res = await fetch('/api/v1/sale-orders/delete_stockexchange_sale_order/', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      const json = await res.json();
-      renderTable('deleteStockExchangeSaleOrderResponse', json);
-    };
-
-    // Update Item Sale Order
-    document.getElementById('updateItemSaleOrderForm').onsubmit = async function (e) {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(this));
-      const res = await fetch('/api/v1/sale-order-items/update_item_sale_order/', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      const json = await res.json();
-      renderTable('updateItemSaleOrderResponse', json);
-    };
-
-    // Update Stock Exchange Sale Order
-    document.getElementById('updateStockExchangeSaleOrderForm').onsubmit = async function (e) {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(this));
-      const res = await fetch('/api/v1/sale-order-items/update_stockexchange_sale_order/', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      const json = await res.json();
-      renderTable('updateStockExchangeSaleOrderResponse', json);
-    };
   </script>
 </body>
 
