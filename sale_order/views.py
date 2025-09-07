@@ -130,21 +130,21 @@ class SaleOrderView(viewsets.GenericViewSet) :
         return self.serializer_class_by_action[self.action]
 
     @swagger_auto_schema(request_body=InputSaleOrderSerializer)
-    @action(detail=False, methods=['post'])
+    @action(detail=False, methods=['post'] , url_path = '')
     def create_sale_order(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         SaleOrderService.create_sale_order(**serializer.validated_data)
         return Response(serializer.data , status=status.HTTP_201_CREATED)
 
-    @action(detail = False , methods = ['post'])
+    @action(detail = False , methods = ['post'], url_path='items/bulk')
     def create_bulk_items(self , request) :
         serializer = self.get_serializer(data=request.data , many = True)
         serializer.is_valid(raise_exception=True)
         SaleOrderService.create_item_sale_order(serializer.validated_data)
         return Response(serializer.data , status=status.HTTP_201_CREATED)
 
-    @action(detail = False , methods = ['post'])
+    @action(detail = False , methods = ['post'], url_path='stock-exchange/bulk')
     def create_bulk_stockexchange_items(self , request) :
         serializer = self.get_serializer(data=request.data , many = True)
         serializer.is_valid(raise_exception=True)
@@ -157,22 +157,22 @@ class SaleOrderView(viewsets.GenericViewSet) :
         serializer = SaleOrderReadSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    @action(detail=False, methods=['get'], url_path='bulk_items')
+    @action(detail=False, methods=['get'], url_path='items')
     def list_bulk_items(self, request):
         queryset = ItemSaleOrder.objects.all()
         serializer = ItemSaleOrderReadSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    @action(detail=False, methods=['get'], url_path='bulk_stockexchange_items')
+    @action(detail=False, methods=['get'], url_path='stock-exchange')
     def list_bulk_stockexchange_items(self, request):
         queryset = StockExchange.objects.all()
         serializer = StockExchangeReadSerializer(queryset, many=True)
         return Response(serializer.data)
 
     @swagger_auto_schema(request_body=DeleteSaleOrderSerializer)
-    @action(detail=False, methods=['delete'], url_path='delete_sale_order')
-    def delete_sale_order(self, request):
-        sale_order_id = request.data.get('sale_order_id')
+    @action(detail=True, methods=['delete'], url_path='stock-exchange')
+    def delete_sale_order(self, request, pk=None):
+        sale_order_id = pk
         if not sale_order_id:
             return Response({'error': 'sale_order_id is required'}, status=status.HTTP_400_BAD_REQUEST)
         try:
@@ -182,37 +182,10 @@ class SaleOrderView(viewsets.GenericViewSet) :
         except SaleOrder.DoesNotExist:
             return Response({'error': f'SaleOrder {sale_order_id} not found.'}, status=status.HTTP_404_NOT_FOUND)
 
-    @swagger_auto_schema(request_body=DeleteItemSaleOrderSerializer)
-    @action(detail=False, methods=['delete'], url_path='delete_item_sale_order')
-    def delete_item_sale_order(self, request):
-        sale_order_id = request.data.get('sale_order_id')
-        brand_item_id = request.data.get('brand_item_id')
-        if not sale_order_id or not brand_item_id:
-            return Response({'error': 'sale_order_id and brand_item_id are required'}, status=status.HTTP_400_BAD_REQUEST)
-        try:
-            item = ItemSaleOrder.objects.get(sale_order_id=sale_order_id, brand_item_id=brand_item_id)
-            item.soft_delete()
-            return Response({'status': 'success', 'message': f'ItemSaleOrder {sale_order_id}-{brand_item_id} soft deleted.'})
-        except ItemSaleOrder.DoesNotExist:
-            return Response({'error': f'ItemSaleOrder {sale_order_id}-{brand_item_id} not found.'}, status=status.HTTP_404_NOT_FOUND)
-
-    @swagger_auto_schema(request_body=DeleteStockExchangeSaleOrderSerializer)
-    @action(detail=False, methods=['delete'], url_path='delete_stockexchange_sale_order')
-    def delete_stockexchange_sale_order(self, request):
-        sale_order_id = request.data.get('sale_order_id')
-        brand_item_id = request.data.get('brand_item_id')
-        if not sale_order_id or not brand_item_id:
-            return Response({'error': 'sale_order_id and brand_item_id are required'}, status=status.HTTP_400_BAD_REQUEST)
-        try:
-            stock = StockExchange.objects.get(sale_order_id=sale_order_id, brand_item_id=brand_item_id)
-            stock.soft_delete()
-            return Response({'status': 'success', 'message': f'StockExchange {sale_order_id}-{brand_item_id} soft deleted.'})
-        except StockExchange.DoesNotExist:
-            return Response({'error': f'StockExchange {sale_order_id}-{brand_item_id} not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 class ItemSaleOrderViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(request_body=UpdateItemSaleOrderSerializer)
-    @action(detail=False, methods=['patch'], url_path='update_item_sale_order')
+    @action(detail=False, methods=['patch'], url_path='item_sale_order')
     def update_item_sale_order(self, request):
         serializer = UpdateItemSaleOrderSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -229,9 +202,23 @@ class ItemSaleOrderViewSet(viewsets.GenericViewSet):
             'status': 'success',
             'message': f'StockExchange {item.sale_order_id}-{item.brand_item_id} updated.'
         })
+
+    @swagger_auto_schema(request_body=DeleteItemSaleOrderSerializer)
+    @action(detail=False, methods=['delete'], url_path='item_sale_order')
+    def delete_item_sale_order(self, request):
+        sale_order_id = request.data.get('sale_order_id')
+        brand_item_id = request.data.get('brand_item_id')
+        if not sale_order_id or not brand_item_id:
+            return Response({'error': 'sale_order_id and brand_item_id are required'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            item = ItemSaleOrder.objects.get(sale_order_id=sale_order_id, brand_item_id=brand_item_id)
+            item.soft_delete()
+            return Response({'status': 'success', 'message': f'ItemSaleOrder {sale_order_id}-{brand_item_id} soft deleted.'})
+        except ItemSaleOrder.DoesNotExist:
+            return Response({'error': f'ItemSaleOrder {sale_order_id}-{brand_item_id} not found.'}, status=status.HTTP_404_NOT_FOUND)
 class StockExchangeViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(request_body=UpdateStockExchangeSerializer)
-    @action(detail=False, methods=['patch'], url_path='update_stockexchange_sale_order')
+    @action(detail=False, methods=['patch'], url_path='stockexchange_sale_order')
     def update_stockexchange_sale_order(self, request):
         serializer = UpdateStockExchangeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -248,6 +235,20 @@ class StockExchangeViewSet(viewsets.GenericViewSet):
             'status': 'success',
             'message': f'StockExchange {item.sale_order_id}-{item.brand_item_id} updated.'
         })
+
+    @swagger_auto_schema(request_body=DeleteStockExchangeSaleOrderSerializer)
+    @action(detail=False, methods=['delete'], url_path='stockexchange_sale_order')
+    def delete_stockexchange_sale_order(self, request):
+        sale_order_id = request.data.get('sale_order_id')
+        brand_item_id = request.data.get('brand_item_id')
+        if not sale_order_id or not brand_item_id:
+            return Response({'error': 'sale_order_id and brand_item_id are required'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            stock = StockExchange.objects.get(sale_order_id=sale_order_id, brand_item_id=brand_item_id)
+            stock.soft_delete()
+            return Response({'status': 'success', 'message': f'StockExchange {sale_order_id}-{brand_item_id} soft deleted.'})
+        except StockExchange.DoesNotExist:
+            return Response({'error': f'StockExchange {sale_order_id}-{brand_item_id} not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 def sale_order_ui(request):
     return render(request, 'sale_order.html')
