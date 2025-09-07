@@ -138,6 +138,52 @@
   </form>
   <div id="orderV2CompletionRateTable"></div>
 
+  <!-- Delete Sale Order -->
+  <h2>Delete Sale Order</h2>
+  <form id="deleteSaleOrderForm">
+    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
+    <button type="submit">Delete Sale Order</button>
+  </form>
+  <div id="deleteSaleOrderResponse"></div>
+
+  <!-- Delete Item Sale Order -->
+  <h2>Delete Item Sale Order</h2>
+  <form id="deleteItemSaleOrderForm">
+    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
+    <label>Brand Item ID: <input type="number" name="brand_item_id" required></label>
+    <button type="submit">Delete Item Sale Order</button>
+  </form>
+  <div id="deleteItemSaleOrderResponse"></div>
+
+  <!-- Delete Stock Exchange Sale Order -->
+  <h2>Delete Stock Exchange Sale Order</h2>
+  <form id="deleteStockExchangeSaleOrderForm">
+    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
+    <label>Brand Item ID: <input type="number" name="brand_item_id" required></label>
+    <button type="submit">Delete Stock Exchange Sale Order</button>
+  </form>
+  <div id="deleteStockExchangeSaleOrderResponse"></div>
+
+  <!-- Update Item Sale Order -->
+  <h2>Update Item Sale Order Quantity</h2>
+  <form id="updateItemSaleOrderForm">
+    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
+    <label>Brand Item ID: <input type="number" name="brand_item_id" required></label>
+    <label>Quantity: <input type="number" name="quantity" min="1" required></label>
+    <button type="submit">Update Item Sale Order</button>
+  </form>
+  <div id="updateItemSaleOrderResponse"></div>
+
+  <!-- Update Stock Exchange Sale Order -->
+  <h2>Update Stock Exchange Sale Order Quantity</h2>
+  <form id="updateStockExchangeSaleOrderForm">
+    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
+    <label>Brand Item ID: <input type="number" name="brand_item_id" required></label>
+    <label>Quantity: <input type="number" name="quantity" min="1" required></label>
+    <button type="submit">Update Stock Exchange Sale Order</button>
+  </form>
+  <div id="updateStockExchangeSaleOrderResponse"></div>
+
   <script>
     // Helper function for POST requests
     async function postForm(url, form, responseDiv, asArray = true) {
@@ -302,6 +348,71 @@
       const res = await fetch(`/api/v2/sale-orders/${orderId}/completion-rate/`);
       const json = await res.json();
       renderTable('orderV2CompletionRateTable', json);
+    };
+
+    // Delete Sale Order
+    document.getElementById('deleteSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-orders/delete_sale_order/', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('deleteSaleOrderResponse', json);
+    };
+
+    // Delete Item Sale Order
+    document.getElementById('deleteItemSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-orders/delete_item_sale_order/', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('deleteItemSaleOrderResponse', json);
+    };
+
+    // Delete Stock Exchange Sale Order
+    document.getElementById('deleteStockExchangeSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-orders/delete_stockexchange_sale_order/', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('deleteStockExchangeSaleOrderResponse', json);
+    };
+
+    // Update Item Sale Order
+    document.getElementById('updateItemSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-order-items/update_item_sale_order/', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('updateItemSaleOrderResponse', json);
+    };
+
+    // Update Stock Exchange Sale Order
+    document.getElementById('updateStockExchangeSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-order-items/update_stockexchange_sale_order/', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('updateStockExchangeSaleOrderResponse', json);
     };
   </script>
 </body>

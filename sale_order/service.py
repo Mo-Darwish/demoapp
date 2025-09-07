@@ -88,8 +88,23 @@ class SaleOrderService :
         items = [StockExchange(**item) for item in data]
         return StockExchange.objects.bulk_create(items)
 
+    @staticmethod
+    def update_item_sale_order(sale_order_id: int, brand_item_id: int, quantity: int) -> ItemSaleOrder:
+        try:
+            item = ItemSaleOrder.objects.get(sale_order_id=sale_order_id, brand_item_id=brand_item_id)
+        except ItemSaleOrder.DoesNotExist:
+            raise
+        item.quantity = quantity
+        item.update()
+        return item
 
+    @staticmethod
+    def update_stockexchange_sale_order(sale_order_id: int, brand_item_id: int, quantity: int) -> StockExchange:
+        try:
+            item = StockExchange.objects.get(sale_order_id=sale_order_id, brand_item_id=brand_item_id)
+        except StockExchange.DoesNotExist:
+            raise
 
-
-
-
+        item.quantity = quantity
+        item.update()
+        return item

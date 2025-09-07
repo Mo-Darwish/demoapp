@@ -16,6 +16,11 @@ class BaseModel(models.Model):
         self.deleted_at = timezone.now()
         self.save()
 
+    def update(self):
+        """method to update the updated_at timestamp."""
+        self.updated_at = timezone.now()
+        self.save()
+
     def restore(self):
         """Restore a soft-deleted record."""
         self.deleted_at = None
