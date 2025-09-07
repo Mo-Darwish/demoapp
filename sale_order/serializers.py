@@ -86,5 +86,13 @@ class DeleteStockExchangeSaleOrderSerializer(serializers.Serializer):
     sale_order_id = serializers.IntegerField(required=True)
     brand_item_id = serializers.IntegerField(required=True)
 
+class UpdateItemSaleOrderSerializer(serializers.Serializer):
+    sale_order_id = serializers.IntegerField(required=True)
+    brand_item_id = serializers.IntegerField(required=True)
+    quantity = serializers.IntegerField(required=True, min_value=1)
 
+class UpdateStockExchangeSerializer(serializers.Serializer):
+    sale_order_id = serializers.IntegerField(required=True)
+    brand_item_id = serializers.IntegerField(required=True)
+    quantity = serializers.IntegerField(required=True, min_value=1)
 

@@ -15,12 +15,14 @@ from .serializers import (
     DeleteSaleOrderSerializer,
     DeleteItemSaleOrderSerializer,
     DeleteStockExchangeSaleOrderSerializer,
+    UpdateItemSaleOrderSerializer,
+    UpdateStockExchangeSerializer,
 )
 # Imports for drf-yasg
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from .models import SaleOrder, ItemSaleOrder, StockExchange
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 class OrderViewSet(viewsets.GenericViewSet):
     serializer_class = OrderDetailSerializer
@@ -207,6 +209,45 @@ class SaleOrderView(viewsets.GenericViewSet) :
             return Response({'status': 'success', 'message': f'StockExchange {sale_order_id}-{brand_item_id} soft deleted.'})
         except StockExchange.DoesNotExist:
             return Response({'error': f'StockExchange {sale_order_id}-{brand_item_id} not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+class ItemSaleOrderViewSet(viewsets.GenericViewSet):
+    @swagger_auto_schema(request_body=UpdateItemSaleOrderSerializer)
+    @action(detail=False, methods=['patch'], url_path='update_item_sale_order')
+    def update_item_sale_order(self, request):
+        serializer = UpdateItemSaleOrderSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        try:
+            item = SaleOrderService.update_item_sale_order(**serializer.validated_data)
+        except ItemSaleOrder.DoesNotExist:
+            return Response(
+                {'error': f'ItemSaleOrder {serializer.validated_data["sale_order_id"]}-'
+                      f'{serializer.validated_data["brand_item_id"]} not found.'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+        return Response({
+            'status': 'success',
+            'message': f'StockExchange {item.sale_order_id}-{item.brand_item_id} updated.'
+        })
+class StockExchangeViewSet(viewsets.GenericViewSet):
+    @swagger_auto_schema(request_body=UpdateStockExchangeSerializer)
+    @action(detail=False, methods=['patch'], url_path='update_stockexchange_sale_order')
+    def update_stockexchange_sale_order(self, request):
+        serializer = UpdateStockExchangeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        try:
+            item = SaleOrderService.update_stockexchange_sale_order(**serializer.validated_data)
+        except StockExchange.DoesNotExist:
+            return Response(
+                {'error': f'StockExchange {serializer.validated_data["sale_order_id"]}-'
+                      f'{serializer.validated_data["brand_item_id"]} not found.'},
+            status=status.HTTP_404_NOT_FOUND
+        )
+        return Response({
+            'status': 'success',
+            'message': f'StockExchange {item.sale_order_id}-{item.brand_item_id} updated.'
+        })
 
 def sale_order_ui(request):
     return render(request, 'sale_order.html')
