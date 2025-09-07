@@ -65,19 +65,51 @@
 
   <h2>Create Bulk Items</h2>
   <form id="createBulkItemsForm">
-    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
-    <label>Quantity: <input type="number" name="quantity" required></label>
-    <label>Brand Item ID: <input type="number" name="brand_item_id" required></label>
-    <button type="submit">Add Item</button>
+    <table id="bulkItemsTableInput">
+      <thead>
+        <tr>
+          <th>Sale Order ID</th>
+          <th>Quantity</th>
+          <th>Brand Item ID</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="number" name="sale_order_id" required></td>
+          <td><input type="number" name="quantity" required></td>
+          <td><input type="number" name="brand_item_id" required></td>
+          <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" onclick="addBulkItemRow()">Add Another Item</button>
+    <button type="submit">Create Bulk Items</button>
   </form>
   <div id="createBulkItemsResponse"></div>
 
   <h2>Create Bulk Stock Exchange Items</h2>
   <form id="createBulkStockExchangeForm">
-    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
-    <label>Quantity: <input type="number" name="quantity" required></label>
-    <label>Brand Item ID: <input type="number" name="brand_item_id" required></label>
-    <button type="submit">Add Stock Exchange Item</button>
+    <table id="bulkStockExchangeTableInput">
+      <thead>
+        <tr>
+          <th>Sale Order ID</th>
+          <th>Quantity</th>
+          <th>Brand Item ID</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="number" name="sale_order_id" required></td>
+          <td><input type="number" name="quantity" required></td>
+          <td><input type="number" name="brand_item_id" required></td>
+          <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" onclick="addBulkStockExchangeRow()">Add Another Item</button>
+    <button type="submit">Create Bulk Stock Exchange Items</button>
   </form>
   <div id="createBulkStockExchangeResponse"></div>
 
@@ -130,13 +162,70 @@
       e.preventDefault();
       postForm('/api/v1/sale-orders/create_sale_order/', this, document.getElementById('createSaleOrderResponse'), false);
     };
+
+    // Add/remove row helpers
+    function addBulkItemRow() {
+      const table = document.getElementById('bulkItemsTableInput').getElementsByTagName('tbody')[0];
+      const newRow = table.rows[0].cloneNode(true);
+      Array.from(newRow.querySelectorAll('input')).forEach(input => input.value = '');
+      table.appendChild(newRow);
+    }
+
+    function addBulkStockExchangeRow() {
+      const table = document.getElementById('bulkStockExchangeTableInput').getElementsByTagName('tbody')[0];
+      const newRow = table.rows[0].cloneNode(true);
+      Array.from(newRow.querySelectorAll('input')).forEach(input => input.value = '');
+      table.appendChild(newRow);
+    }
+
+    function removeRow(btn) {
+      const row = btn.closest('tr');
+      const tbody = row.parentNode;
+      if (tbody.rows.length > 1) {
+        tbody.removeChild(row);
+      }
+    }
+
+    // Bulk Items submit
     document.getElementById('createBulkItemsForm').onsubmit = function (e) {
       e.preventDefault();
-      postForm('/api/v1/sale-orders/create_bulk_items/', this, document.getElementById('createBulkItemsResponse'));
+      const rows = Array.from(document.querySelectorAll('#bulkItemsTableInput tbody tr'));
+      const data = rows.map(row => ({
+        sale_order_id: row.querySelector('input[name="sale_order_id"]').value,
+        quantity: row.querySelector('input[name="quantity"]').value,
+        brand_item_id: row.querySelector('input[name="brand_item_id"]').value
+      }));
+      fetch('/api/v1/sale-orders/create_bulk_items/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(res => res.json().then(json => ({ ok: res.ok, json })))
+        .then(({ ok, json }) => {
+          document.getElementById('createBulkItemsResponse').textContent = JSON.stringify(json, null, 2);
+          document.getElementById('createBulkItemsResponse').className = ok ? 'response' : 'error';
+        });
     };
+
+    // Bulk Stock Exchange submit
     document.getElementById('createBulkStockExchangeForm').onsubmit = function (e) {
       e.preventDefault();
-      postForm('/api/v1/sale-orders/create_bulk_stockexchange_items/', this, document.getElementById('createBulkStockExchangeResponse'));
+      const rows = Array.from(document.querySelectorAll('#bulkStockExchangeTableInput tbody tr'));
+      const data = rows.map(row => ({
+        sale_order_id: row.querySelector('input[name="sale_order_id"]').value,
+        quantity: row.querySelector('input[name="quantity"]').value,
+        brand_item_id: row.querySelector('input[name="brand_item_id"]').value
+      }));
+      fetch('/api/v1/sale-orders/create_bulk_stockexchange_items/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(res => res.json().then(json => ({ ok: res.ok, json })))
+        .then(({ ok, json }) => {
+          document.getElementById('createBulkStockExchangeResponse').textContent = JSON.stringify(json, null, 2);
+          document.getElementById('createBulkStockExchangeResponse').className = ok ? 'response' : 'error';
+        });
     };
 
     // Read endpoints
