@@ -35,6 +35,21 @@
     .error {
       color: red;
     }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 1em;
+    }
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 6px 12px;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
   </style>
 </head>
 
@@ -68,15 +83,28 @@
 
   <h2>Read Sale Orders</h2>
   <button onclick="fetchSaleOrders()">Get Sale Orders</button>
-  <pre id="saleOrdersList"></pre>
+  <div id="saleOrdersTable"></div>
 
   <h2>Read Bulk Items</h2>
   <button onclick="fetchBulkItems()">Get Bulk Items</button>
-  <pre id="bulkItemsList"></pre>
+  <div id="bulkItemsTable"></div>
 
   <h2>Read Bulk Stock Exchange Items</h2>
   <button onclick="fetchBulkStockExchangeItems()">Get Bulk Stock Exchange Items</button>
-  <pre id="bulkStockExchangeItemsList"></pre>
+  <div id="bulkStockExchangeItemsTable"></div>
+
+  <h2>OrdersViewV2 Endpoints</h2>
+
+  <h3>Get All Completion Rates</h3>
+  <button onclick="fetchOrderV2CompletionRates()">Get All Completion Rates</button>
+  <div id="orderV2CompletionRatesTable"></div>
+
+  <h3>Get Completion Rate for Specific Order</h3>
+  <form id="orderV2CompletionRateForm">
+    <label>Order ID: <input type="number" name="order_id" required></label>
+    <button type="submit">Get Completion Rate</button>
+  </form>
+  <div id="orderV2CompletionRateTable"></div>
 
   <script>
     // Helper function for POST requests
@@ -114,16 +142,78 @@
     // Read endpoints
     async function fetchSaleOrders() {
       const res = await fetch('/api/v1/sale-orders/sale_orders/');
-      document.getElementById('saleOrdersList').textContent = await res.text();
+      const json = await res.json();
+      renderTable('saleOrdersTable', json);
     }
+
     async function fetchBulkItems() {
       const res = await fetch('/api/v1/sale-orders/bulk_items/');
-      document.getElementById('bulkItemsList').textContent = await res.text();
+      const json = await res.json();
+      renderTable('bulkItemsTable', json);
     }
+
     async function fetchBulkStockExchangeItems() {
       const res = await fetch('/api/v1/sale-orders/bulk_stockexchange_items/');
-      document.getElementById('bulkStockExchangeItemsList').textContent = await res.text();
+      const json = await res.json();
+      renderTable('bulkStockExchangeItemsTable', json);
     }
+
+    // OrdersViewV2: Get all completion rates
+    // Helper to pretty-print JSON
+    function renderJsonResponse(elementId, data, ok = true) {
+      const el = document.getElementById(elementId);
+      el.textContent = JSON.stringify(data, null, 2);
+      el.parentElement.className = ok ? 'response' : 'error';
+    }
+
+    function renderTable(elementId, data) {
+      let html = '';
+      if (Array.isArray(data)) {
+        if (data.length === 0) {
+          html = '<p>No data found.</p>';
+        } else {
+          html = '<table><thead><tr>';
+          // Table headers
+          Object.keys(data[0]).forEach(key => {
+            html += `<th>${key}</th>`;
+          });
+          html += '</tr></thead><tbody>';
+          // Table rows
+          data.forEach(row => {
+            html += '<tr>';
+            Object.values(row).forEach(val => {
+              html += `<td>${val}</td>`;
+            });
+            html += '</tr>';
+          });
+          html += '</tbody></table>';
+        }
+      } else if (typeof data === 'object' && data !== null) {
+        html = '<table><tbody>';
+        Object.entries(data).forEach(([key, val]) => {
+          html += `<tr><th>${key}</th><td>${val}</td></tr>`;
+        });
+        html += '</tbody></table>';
+      } else {
+        html = `<p>${data}</p>`;
+      }
+      document.getElementById(elementId).innerHTML = html;
+    }
+
+    async function fetchOrderV2CompletionRates() {
+      const res = await fetch('/api/v2/sale-orders/completion-rates/');
+      const json = await res.json();
+      renderTable('orderV2CompletionRatesTable', json);
+    }
+
+    // OrdersViewV2: Get completion rate for specific order
+    document.getElementById('orderV2CompletionRateForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const orderId = this.order_id.value;
+      const res = await fetch(`/api/v2/sale-orders/${orderId}/completion-rate/`);
+      const json = await res.json();
+      renderTable('orderV2CompletionRateTable', json);
+    };
   </script>
 </body>
 
