@@ -37,7 +37,7 @@ urlpatterns = [
     # path('auth/', include('django.contrib.auth.urls')),
     path('api-auth/', include('rest_framework.urls') ),
     path('api/v1/', include(('accounts.urls' , 'accounts') , namespace = 'v1')),
-    path('api/v1/', include(('sale_order.urls' , 'sale_order') , namespace = 'v1')),
+    path('api/', include(('sale_order.urls' , 'sale_order'))),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
 
