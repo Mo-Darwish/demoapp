@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
    'drf_yasg',
    'sale_order',
+       "corsheaders",
+
 
 ]
 REST_FRAMEWORK = {
@@ -73,11 +75,12 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+        'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
         "whitenoise.middleware.WhiteNoiseMiddleware",
 
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -258,3 +261,10 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+
+# Configure CORS
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Next.js dev server
+    "https://v0-e-commerce-admin-panel-drab.vercel.app/",  # Your Next.js production URL
+]
