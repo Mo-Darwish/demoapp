@@ -251,7 +251,7 @@ class StockExchangeViewSet(viewsets.GenericViewSet):
             return Response({'error': f'StockExchange {sale_order_id}-{brand_item_id} not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 def sale_order_ui(request):
-    send_email_time()
+    send_email_time.delay()
     return render(request, 'sale_order.html')
 
 
