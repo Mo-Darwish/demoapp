@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "sale_order",
     "corsheaders",
+
 ]
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (),
@@ -261,4 +262,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://v0-e-commerce-admin-panel-drab.vercel.app/",
     "https://demoapp-frontend.vercel.app/",  # Your Next.js production URL
 ]
+
+
+CELERY_BROKER_URL= os.getenv('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND=os.getenv('CELERY_RESULT_BACKEND')
 

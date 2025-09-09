@@ -13,6 +13,7 @@ coreschema==0.0.4
 dj-database-url==3.0.1
 Django==4.2
 django-cors-headers==4.7.0
+
 django-extensions==4.1
 django-rest-swagger==2.2.0
 djangorestframework==3.16.1

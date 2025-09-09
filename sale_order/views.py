@@ -23,6 +23,9 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from .models import SaleOrder, ItemSaleOrder, StockExchange
 from django.shortcuts import render, get_object_or_404
+
+from .tasks import send_email_time
+
 class OrderViewSet(viewsets.GenericViewSet):
     serializer_class = OrderDetailSerializer
 
@@ -123,6 +126,7 @@ class SaleOrderView(viewsets.GenericViewSet) :
         "list_bulk_items" : ItemSaleOrderReadSerializer ,
         "list_bulk_stockexchange_items" : StockExchangeReadSerializer ,
         "delete_sale_order" : DeleteSaleOrderSerializer ,
+
     }
     def get_serializer_class(self):
         """
@@ -253,6 +257,7 @@ class StockExchangeViewSet(viewsets.GenericViewSet):
             return Response({'error': f'StockExchange {sale_order_id}-{brand_item_id} not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 def sale_order_ui(request):
+    send_email_time.delay()
     return render(request, 'sale_order.html')
 
 
