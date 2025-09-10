@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Accounts Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+    }
+
+    h2 {
+      margin-top: 2em;
+    }
+
+    form {
+      margin-bottom: 2em;
+    }
+
+    label {
+      display: block;
+      margin-top: 0.5em;
+    }
+
+    input,
+    button {
+      margin-top: 0.5em;
+    }
+
+    .response {
+      margin-top: 1em;
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 1em;
+    }
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 6px 12px;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Accounts Management</h1>
+
+  <h2>Register</h2>
+  <form id="registerForm">
+    <label>Username: <input type="text" name="username" required></label>
+    <label>Email: <input type="email" name="email" required></label>
+    <label>Password: <input type="password" name="password" required></label>
+    <label>Confirm Password: <input type="password" name="confirm_password" required></label>
+    <button type="submit">Register</button>
+  </form>
+  <div id="registerResponse"></div>
+
+  <h2>Login</h2>
+  <form id="loginForm">
+    <label>Username: <input type="text" name="username" required></label>
+    <label>Password: <input type="password" name="password" required></label>
+    <button type="submit">Login</button>
+  </form>
+  <div id="loginResponse"></div>
+
+  <h2>Logout</h2>
+  <form id="logoutForm">
+    <label>Refresh Token: <input type="text" name="refresh_token" required></label>
+    <button type="submit">Logout</button>
+  </form>
+  <div id="logoutResponse"></div>
+
+  <h2>Request Password Reset Email</h2>
+  <form id="requestResetForm">
+    <label>Email: <input type="email" name="email" required></label>
+    <button type="submit">Request Reset</button>
+  </form>
+  <div id="requestResetResponse"></div>
+
+  <h2>Reset Password (via token)</h2>
+  <form id="resetPasswordForm">
+    <label>UID (uidb64): <input type="text" name="uidb64" required></label>
+    <label>Token: <input type="text" name="token" required></label>
+    <label>New Password: <input type="password" name="password" required></label>
+    <label>Confirm Password: <input type="password" name="confirm_password" required></label>
+    <button type="submit">Reset Password</button>
+  </form>
+  <div id="resetPasswordResponse"></div>
+
+  <h2>Update Password (authenticated)</h2>
+  <form id="updatePasswordForm">
+    <label>New Password: <input type="password" name="password" required></label>
+    <label>Confirm Password: <input type="password" name="confirm_password" required></label>
+    <label>Access Token: <input type="text" name="access_token" required></label>
+    <button type="submit">Update Password</button>
+  </form>
+  <div id="updatePasswordResponse"></div>
+
+  <script>
+    function renderTable(elementId, data) {
+      let html = '';
+      if (Array.isArray(data)) {
+        if (data.length === 0) {
+          html = '<p>No data found.</p>';
+        } else {
+          html = '<table><thead><tr>';
+          Object.keys(data[0]).forEach(key => {
+            html += `<th>${key}</th>`;
+          });
+          html += '</tr></thead><tbody>';
+          data.forEach(row => {
+            html += '<tr>';
+            Object.values(row).forEach(val => {
+              html += `<td>${val}</td>`;
+            });
+            html += '</tr>';
+          });
+          html += '</tbody></table>';
+        }
+      } else if (typeof data === 'object' && data !== null) {
+        html = '<table><tbody>';
+        Object.entries(data).forEach(([key, val]) => {
+          html += `<tr><th>${key}</th><td>${val}</td></tr>`;
+        });
+        html += '</tbody></table>';
+      } else {
+        html = `<p>${data}</p>`;
+      }
+      document.getElementById(elementId).innerHTML = html;
+    }
+
+    // Register
+    document.getElementById('registerForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/auth/jwt/register/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('registerResponse', json);
+    };
+
+    // Login
+    document.getElementById('loginForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/auth/jwt/login/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('loginResponse', json);
+    };
+
+    // Logout
+    document.getElementById('logoutForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/auth/jwt/logout/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (res.status === 205) {
+        renderTable('logoutResponse', { message: "Logged out successfully." });
+      } else {
+        const json = await res.json();
+        renderTable('logoutResponse', json);
+      }
+    };
+
+    // Request Password Reset Email
+    document.getElementById('requestResetForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/auth/jwt/reset/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('requestResetResponse', json);
+    };
+
+    // Reset Password via token
+    document.getElementById('resetPasswordForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const url = `/api/v1/auth/jwt/password-reset/${data.uidb64}/${data.token}/`;
+      const payload = { password: data.password, confirm_password: data.confirm_password };
+      const res = await fetch(url, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json();
+      renderTable('resetPasswordResponse', json);
+    };
+
+    // Update Password (authenticated)
+    document.getElementById('updatePasswordForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/auth/jwt/password-change/', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${data.access_token}`
+        },
+        body: JSON.stringify({ password: data.password, confirm_password: data.confirm_password })
+      });
+      const json = await res.json();
+      renderTable('updatePasswordResponse', json);
+    };
+  </script>
+</body>
+
+</html>
