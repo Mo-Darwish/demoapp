@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate
-
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -15,10 +14,15 @@ from django.urls import reverse
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, smart_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.core import serializers
+from rest_framework import serializers
 # Imports for drf-yasg
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from django.shortcuts import render
+
+
+def accounts_ui(request):
+    return render(request, 'accounts.html')
 
 class RegisterView(APIView):
     authentication_classes = []
@@ -44,11 +48,11 @@ class LoginView(APIView) :
     serializer.is_valid(raise_exception = True)
     # print("the data from serializer : " , serializer.data)
     user = authenticate(request , username = serializer.data['username'] , password = serializer.data['password'])
-    if user is  None :
-            raise serializer.ValidationError({"status": "error", "message": "Username or password doesn't match. Please try again."})
+    if user is None:
+        raise serializers.ValidationError({"status": "error", "message": "Username or password doesn't match. Please try again."})
 
     if not user.is_active:
-            raise serializer.ValidationError({"status": "error", "message": "Account not verified."})
+        raise serializers.ValidationError({"status": "error", "message": "Account not verified."})
 
     token = get_tokens_for_user(user)
     return Response(token , status=status.HTTP_201_CREATED)

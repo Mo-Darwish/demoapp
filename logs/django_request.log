@@ -1,0 +1,688 @@
+[2025-09-02 09:00:09,433] ERROR django.request: Internal Server Error: /api/v1/orders/completion-rates/
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/sale_order/views.py", line 13, in list_completion_rates
+    queryset = OrderService.get_orders_with_completion_rates()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'OrderService' has no attribute 'get_orders_with_completion_rates'
+[2025-09-02 09:03:48,731] ERROR django.request: Internal Server Error: /api/v1/orders/completion-rates/
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/sale_order/views.py", line 15, in list_completion_rates
+    queryset = OrderService.get_orders_with_completion_rates()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'OrderService' has no attribute 'get_orders_with_completion_rates'
+[2025-09-02 09:05:22,335] ERROR django.request: Internal Server Error: /api/v1/orders/completion-rates/
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/psycopg/cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "sale_order_orders_details" does not exist
+LINE 1: ...uantity")) ELSE 0.0 END AS "completion_rate" FROM "sale_orde...
+                                                             ^
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/sale_order/views.py", line 17, in list_completion_rates
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 797, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/serializers.py", line 716, in to_representation
+    self.child.to_representation(item) for item in iterable
+                                                   ^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/query.py", line 398, in __iter__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/query.py", line 208, in __iter__
+    for row in compiler.results_iter(
+               ~~~~~~~~~~~~~~~~~~~~~^
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1511, in results_iter
+    results = self.execute_sql(
+        MULTI, chunked_fetch=chunked_fetch, chunk_size=chunk_size
+    )
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/sql/compiler.py", line 1560, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/psycopg/cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+django.db.utils.ProgrammingError: relation "sale_order_orders_details" does not exist
+LINE 1: ...uantity")) ELSE 0.0 END AS "completion_rate" FROM "sale_orde...
+                                                             ^
+[2025-09-02 09:30:51,200] ERROR django.request: Internal Server Error: /api/v1/orders/138334/completion-rate/
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/sale_order/views.py", line 38, in retrieve_completion_rate
+    serializer = self.get_serializer(queryset.first())
+                                     ~~~~~~~~~~~~~~^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1055, in first
+    self._check_ordering_first_last_queryset_aggregation(method="first")
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1973, in _check_ordering_first_last_queryset_aggregation
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: Cannot use QuerySet.first() on an unordered queryset performing aggregation. Add an ordering with order_by().
+[2025-09-02 09:55:15,524] ERROR django.request: Internal Server Error: /api/v1/orders/137411/completion-rate/
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/sale_order/views.py", line 30, in retrieve_completion_rate
+    queryset = OrderService.get_orders_with_completion_rates(sale_order_id)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/sale_order/service.py", line 38, in get_orders_with_completion_rates
+    ).annotate(
+      ~~~~~~~~^
+        completion_rate=(
+        ^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        )
+        ^
+    )
+    ^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1590, in annotate
+    return self._annotate(args, kwargs, select=True)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1638, in _annotate
+    clone.query.add_annotation(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        annotation,
+        ^^^^^^^^^^^
+        alias,
+        ^^^^^^
+        select=select,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1086, in add_annotation
+    annotation = annotation.resolve_expression(self, allow_joins=True, reuse=None)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/expressions.py", line 694, in resolve_expression
+    lhs = self.lhs.resolve_expression(
+        query, allow_joins, reuse, summarize, for_save
+    )
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/expressions.py", line 694, in resolve_expression
+    lhs = self.lhs.resolve_expression(
+        query, allow_joins, reuse, summarize, for_save
+    )
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/expressions.py", line 942, in resolve_expression
+    c.source_expressions[pos] = arg.resolve_expression(
+                                ~~~~~~~~~~~~~~~~~~~~~~^
+        query, allow_joins, reuse, summarize, for_save
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/expressions.py", line 822, in resolve_expression
+    return query.resolve_ref(self.name, allow_joins, reuse, summarize)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1929, in resolve_ref
+    join_info = self.setup_joins(
+        field_list, self.get_meta(), self.get_initial_alias(), can_reuse=reuse
+    )
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1776, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+                                       ~~~~~~~~~~~~~~~~~~^
+        names[:pivot],
+        ^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fail_on_missing=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1677, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'total_stockexchange_quantity' into field. Choices are: brand_item_id, id, order_quantity, quantity_at_market, quantity_post_market, sale_order_id, stockexchange_quantity, total_quantity, total_stockexchange
+[2025-09-02 10:00:18,115] ERROR django.request: Internal Server Error: /api/v1/orders/137411/completion-rate/
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/sale_order/views.py", line 30, in retrieve_completion_rate
+    queryset = OrderService.get_orders_with_completion_rates(sale_order_id)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/sale_order/service.py", line 38, in get_orders_with_completion_rates
+    ).annotate(
+      ~~~~~~~~^
+        completion_rate=(
+        ^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        )
+        ^
+    )
+    ^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1590, in annotate
+    return self._annotate(args, kwargs, select=True)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1638, in _annotate
+    clone.query.add_annotation(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        annotation,
+        ^^^^^^^^^^^
+        alias,
+        ^^^^^^
+        select=select,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1086, in add_annotation
+    annotation = annotation.resolve_expression(self, allow_joins=True, reuse=None)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/expressions.py", line 694, in resolve_expression
+    lhs = self.lhs.resolve_expression(
+        query, allow_joins, reuse, summarize, for_save
+    )
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/expressions.py", line 694, in resolve_expression
+    lhs = self.lhs.resolve_expression(
+        query, allow_joins, reuse, summarize, for_save
+    )
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/expressions.py", line 942, in resolve_expression
+    c.source_expressions[pos] = arg.resolve_expression(
+                                ~~~~~~~~~~~~~~~~~~~~~~^
+        query, allow_joins, reuse, summarize, for_save
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/expressions.py", line 822, in resolve_expression
+    return query.resolve_ref(self.name, allow_joins, reuse, summarize)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1929, in resolve_ref
+    join_info = self.setup_joins(
+        field_list, self.get_meta(), self.get_initial_alias(), can_reuse=reuse
+    )
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1776, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+                                       ~~~~~~~~~~~~~~~~~~^
+        names[:pivot],
+        ^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fail_on_missing=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/sql/query.py", line 1677, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'total_stockexchange_quantity' into field. Choices are: brand_item_id, id, order_quantity, quantity_at_market, quantity_post_market, sale_order_id, stockexchange_quantity, total_quantity, total_stockexchange
+[2025-09-02 10:02:25,149] ERROR django.request: Internal Server Error: /api/v1/orders/147618/completion-rate/
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/sale_order/views.py", line 30, in retrieve_completion_rate
+    queryset = OrderService.get_orders_with_completion_rates(sale_order_id)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/sale_order/service.py", line 48, in get_orders_with_completion_rates
+    problematic_data = queryset.filter(sale_order_id=147618).first()
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1055, in first
+    self._check_ordering_first_last_queryset_aggregation(method="first")
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/db/models/query.py", line 1973, in _check_ordering_first_last_queryset_aggregation
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: Cannot use QuerySet.first() on an unordered queryset performing aggregation. Add an ordering with order_by().
+[2025-09-02 11:08:11,257] ERROR django.request: Internal Server Error: /api/v1/orders/completion-rates/
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/sale_order/views.py", line 15, in list_completion_rates
+    queryset = OrderService.get_orders_with_completion_rates()
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/sale_order/service.py", line 38, in get_orders_with_completion_rates
+    Round(completion_rate=Case(
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+        When(total_quantity__gt=0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        output_field=FloatField()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) , precision= 2)
+    ^^^^^^^^^^^^^^^^^
+TypeError: Round.__init__() missing 1 required positional argument: 'expression'
+[2025-09-02 11:50:28,341] ERROR django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/response.py", line 111, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/drf_yasg/renderers.py", line 79, in render
+    return render_to_string(self.template, renderer_context, renderer_context['request'])
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 54, in render
+    result = self.nodelist.render(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 116, in render
+    url = self.url(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 113, in url
+    return self.handle_simple(path)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 129, in handle_simple
+    return staticfiles_storage.url(path)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 203, in url
+    return self._url(self.stored_name, name, force)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 182, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 513, in stored_name
+    raise ValueError(
+        "Missing staticfiles manifest entry for '%s'" % clean_name
+    )
+ValueError: Missing staticfiles manifest entry for 'drf-yasg/swagger-ui-dist/favicon-32x32.png'
+[2025-09-02 11:50:29,806] ERROR django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/response.py", line 111, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/drf_yasg/renderers.py", line 79, in render
+    return render_to_string(self.template, renderer_context, renderer_context['request'])
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 54, in render
+    result = self.nodelist.render(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 116, in render
+    url = self.url(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 113, in url
+    return self.handle_simple(path)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 129, in handle_simple
+    return staticfiles_storage.url(path)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 203, in url
+    return self._url(self.stored_name, name, force)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 182, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 513, in stored_name
+    raise ValueError(
+        "Missing staticfiles manifest entry for '%s'" % clean_name
+    )
+ValueError: Missing staticfiles manifest entry for 'drf-yasg/swagger-ui-dist/favicon-32x32.png'
+[2025-09-02 11:51:57,914] ERROR django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/response.py", line 111, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/drf_yasg/renderers.py", line 79, in render
+    return render_to_string(self.template, renderer_context, renderer_context['request'])
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 54, in render
+    result = self.nodelist.render(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 116, in render
+    url = self.url(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 113, in url
+    return self.handle_simple(path)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 129, in handle_simple
+    return staticfiles_storage.url(path)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 203, in url
+    return self._url(self.stored_name, name, force)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 182, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 513, in stored_name
+    raise ValueError(
+        "Missing staticfiles manifest entry for '%s'" % clean_name
+    )
+ValueError: Missing staticfiles manifest entry for 'drf-yasg/swagger-ui-dist/favicon-32x32.png'
+[2025-09-02 11:53:29,607] ERROR django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/response.py", line 111, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/drf_yasg/renderers.py", line 79, in render
+    return render_to_string(self.template, renderer_context, renderer_context['request'])
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 54, in render
+    result = self.nodelist.render(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 116, in render
+    url = self.url(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 113, in url
+    return self.handle_simple(path)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 129, in handle_simple
+    return staticfiles_storage.url(path)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 203, in url
+    return self._url(self.stored_name, name, force)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 182, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 513, in stored_name
+    raise ValueError(
+        "Missing staticfiles manifest entry for '%s'" % clean_name
+    )
+ValueError: Missing staticfiles manifest entry for 'drf-yasg/swagger-ui-dist/favicon-32x32.png'
+[2025-09-02 11:53:30,502] ERROR django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/response.py", line 111, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/rest_framework/response.py", line 74, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/drf_yasg/renderers.py", line 79, in render
+    return render_to_string(self.template, renderer_context, renderer_context['request'])
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/loader_tags.py", line 54, in render
+    result = self.nodelist.render(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 116, in render
+    url = self.url(context)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 113, in url
+    return self.handle_simple(path)
+           ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/templatetags/static.py", line 129, in handle_simple
+    return staticfiles_storage.url(path)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 203, in url
+    return self._url(self.stored_name, name, force)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 182, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/Users/modarwish/Documents/Learn/backend/temp/demoapp/path/to/venv/lib/python3.13/site-packages/django/contrib/staticfiles/storage.py", line 513, in stored_name
+    raise ValueError(
+        "Missing staticfiles manifest entry for '%s'" % clean_name
+    )
+ValueError: Missing staticfiles manifest entry for 'drf-yasg/swagger-ui-dist/favicon-32x32.png'

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Sale Order Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+    }
+
+    h2 {
+      margin-top: 2em;
+    }
+
+    form {
+      margin-bottom: 2em;
+    }
+
+    label {
+      display: block;
+      margin-top: 0.5em;
+    }
+
+    input,
+    button {
+      margin-top: 0.5em;
+    }
+
+    .response {
+      margin-top: 1em;
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 1em;
+    }
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 6px 12px;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Sale Order Management</h1>
+
+  <h2>Create Sale Order</h2>
+  <form id="createSaleOrderForm">
+    <label>Status: <input type="text" name="status" required></label>
+    <button type="submit">Create Sale Order</button>
+  </form>
+  <div id="createSaleOrderResponse"></div>
+
+  <h2>Create Bulk Items</h2>
+  <form id="createBulkItemsForm">
+    <table id="bulkItemsTableInput">
+      <thead>
+        <tr>
+          <th>Sale Order ID</th>
+          <th>Quantity</th>
+          <th>Brand Item ID</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="number" name="sale_order_id" required></td>
+          <td><input type="number" name="quantity" required></td>
+          <td><input type="number" name="brand_item_id" required></td>
+          <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" onclick="addBulkItemRow()">Add Another Item</button>
+    <button type="submit">Create Bulk Items</button>
+  </form>
+  <div id="createBulkItemsResponse"></div>
+
+  <h2>Create Bulk Stock Exchange Items</h2>
+  <form id="createBulkStockExchangeForm">
+    <table id="bulkStockExchangeTableInput">
+      <thead>
+        <tr>
+          <th>Sale Order ID</th>
+          <th>Quantity</th>
+          <th>Brand Item ID</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="number" name="sale_order_id" required></td>
+          <td><input type="number" name="quantity" required></td>
+          <td><input type="number" name="brand_item_id" required></td>
+          <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" onclick="addBulkStockExchangeRow()">Add Another Item</button>
+    <button type="submit">Create Bulk Stock Exchange Items</button>
+  </form>
+  <div id="createBulkStockExchangeResponse"></div>
+
+  <h2>Read Sale Orders</h2>
+  <button onclick="fetchSaleOrders()">Get Sale Orders</button>
+  <div id="saleOrdersTable"></div>
+
+  <h2>Read Bulk Items</h2>
+  <button onclick="fetchBulkItems()">Get Bulk Items</button>
+  <div id="bulkItemsTable"></div>
+
+  <h2>Read Bulk Stock Exchange Items</h2>
+  <button onclick="fetchBulkStockExchangeItems()">Get Bulk Stock Exchange Items</button>
+  <div id="bulkStockExchangeItemsTable"></div>
+
+  <h2>OrdersViewV2 Endpoints</h2>
+
+  <h3>Get All Completion Rates</h3>
+  <button onclick="fetchOrderV2CompletionRates()">Get All Completion Rates</button>
+  <div id="orderV2CompletionRatesTable"></div>
+
+  <h3>Get Completion Rate for Specific Order</h3>
+  <form id="orderV2CompletionRateForm">
+    <label>Order ID: <input type="number" name="order_id" required></label>
+    <button type="submit">Get Completion Rate</button>
+  </form>
+  <div id="orderV2CompletionRateTable"></div>
+
+  <!-- Delete Sale Order -->
+  <h2>Delete Sale Order</h2>
+  <form id="deleteSaleOrderForm">
+    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
+    <button type="submit">Delete Sale Order</button>
+  </form>
+  <div id="deleteSaleOrderResponse"></div>
+
+  <!-- Delete Item Sale Order -->
+  <h2>Delete Item Sale Order</h2>
+  <form id="deleteItemSaleOrderForm">
+    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
+    <label>Brand Item ID: <input type="number" name="brand_item_id" required></label>
+    <button type="submit">Delete Item Sale Order</button>
+  </form>
+  <div id="deleteItemSaleOrderResponse"></div>
+
+  <!-- Delete Stock Exchange Sale Order -->
+  <h2>Delete Stock Exchange Sale Order</h2>
+  <form id="deleteStockExchangeSaleOrderForm">
+    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
+    <label>Brand Item ID: <input type="number" name="brand_item_id" required></label>
+    <button type="submit">Delete Stock Exchange Sale Order</button>
+  </form>
+  <div id="deleteStockExchangeSaleOrderResponse"></div>
+
+  <!-- Update Item Sale Order -->
+  <h2>Update Item Sale Order Quantity</h2>
+  <form id="updateItemSaleOrderForm">
+    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
+    <label>Brand Item ID: <input type="number" name="brand_item_id" required></label>
+    <label>Quantity: <input type="number" name="quantity" min="1" required></label>
+    <button type="submit">Update Item Sale Order</button>
+  </form>
+  <div id="updateItemSaleOrderResponse"></div>
+
+  <!-- Update Stock Exchange Sale Order -->
+  <h2>Update Stock Exchange Sale Order Quantity</h2>
+  <form id="updateStockExchangeSaleOrderForm">
+    <label>Sale Order ID: <input type="number" name="sale_order_id" required></label>
+    <label>Brand Item ID: <input type="number" name="brand_item_id" required></label>
+    <label>Quantity: <input type="number" name="quantity" min="1" required></label>
+    <button type="submit">Update Stock Exchange Sale Order</button>
+  </form>
+  <div id="updateStockExchangeSaleOrderResponse"></div>
+
+  <script>
+    // Helper function for POST requests
+    async function postForm(url, form, responseDiv, asArray = true) {
+      const data = Object.fromEntries(new FormData(form));
+      const payload = asArray ? [data] : data;
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const json = await res.json();
+        responseDiv.textContent = JSON.stringify(json, null, 2);
+        responseDiv.className = res.ok ? 'response' : 'error';
+      } catch (err) {
+        responseDiv.textContent = err;
+        responseDiv.className = 'error';
+      }
+    }
+
+    // Sale Order Create
+    document.getElementById('createSaleOrderForm').onsubmit = function (e) {
+      e.preventDefault();
+      postForm('/api/v1/sale-orders/create_sale_order/', this, document.getElementById('createSaleOrderResponse'), false);
+    };
+
+    // Add/remove row helpers
+    function addBulkItemRow() {
+      const table = document.getElementById('bulkItemsTableInput').getElementsByTagName('tbody')[0];
+      const newRow = table.rows[0].cloneNode(true);
+      Array.from(newRow.querySelectorAll('input')).forEach(input => input.value = '');
+      table.appendChild(newRow);
+    }
+
+    function addBulkStockExchangeRow() {
+      const table = document.getElementById('bulkStockExchangeTableInput').getElementsByTagName('tbody')[0];
+      const newRow = table.rows[0].cloneNode(true);
+      Array.from(newRow.querySelectorAll('input')).forEach(input => input.value = '');
+      table.appendChild(newRow);
+    }
+
+    function removeRow(btn) {
+      const row = btn.closest('tr');
+      const tbody = row.parentNode;
+      if (tbody.rows.length > 1) {
+        tbody.removeChild(row);
+      }
+    }
+
+    // Bulk Items Create
+    document.getElementById('createBulkItemsForm').onsubmit = function (e) {
+      e.preventDefault();
+      const rows = Array.from(document.querySelectorAll('#bulkItemsTableInput tbody tr'));
+      const data = rows.map(row => ({
+        sale_order_id: row.querySelector('input[name="sale_order_id"]').value,
+        quantity: row.querySelector('input[name="quantity"]').value,
+        brand_item_id: row.querySelector('input[name="brand_item_id"]').value
+      }));
+      fetch('/api/v1/sale-orders/items/bulk/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(async res => {
+          const contentType = res.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const json = await res.json();
+            document.getElementById('createBulkItemsResponse').textContent = JSON.stringify(json, null, 2);
+            document.getElementById('createBulkItemsResponse').className = res.ok ? 'response' : 'error';
+          } else {
+            const text = await res.text();
+            document.getElementById('createBulkItemsResponse').textContent = text;
+            document.getElementById('createBulkItemsResponse').className = 'error';
+          }
+        });
+    };
+
+    // Bulk Stock Exchange Create
+    document.getElementById('createBulkStockExchangeForm').onsubmit = function (e) {
+      e.preventDefault();
+      const rows = Array.from(document.querySelectorAll('#bulkStockExchangeTableInput tbody tr'));
+      const data = rows.map(row => ({
+        sale_order_id: row.querySelector('input[name="sale_order_id"]').value,
+        quantity: row.querySelector('input[name="quantity"]').value,
+        brand_item_id: row.querySelector('input[name="brand_item_id"]').value
+      }));
+      fetch('/api/v1/sale-orders/stock-exchange/bulk/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(async res => {
+          const contentType = res.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const json = await res.json();
+            document.getElementById('createBulkStockExchangeResponse').textContent = JSON.stringify(json, null, 2);
+            document.getElementById('createBulkStockExchangeResponse').className = res.ok ? 'response' : 'error';
+          } else {
+            const text = await res.text();
+            document.getElementById('createBulkStockExchangeResponse').textContent = text;
+            document.getElementById('createBulkStockExchangeResponse').className = 'error';
+          }
+        });
+    };
+
+    // Read endpoints
+    async function fetchSaleOrders() {
+      const res = await fetch('/api/v1/sale-orders/sale_orders/');
+      const json = await res.json();
+      renderTable('saleOrdersTable', json);
+    }
+
+    async function fetchBulkItems() {
+      const res = await fetch('/api/v1/sale-orders/items/');
+      const json = await res.json();
+      renderTable('bulkItemsTable', json);
+    }
+
+    async function fetchBulkStockExchangeItems() {
+      const res = await fetch('/api/v1/sale-orders/stock-exchange/');
+      const json = await res.json();
+      renderTable('bulkStockExchangeItemsTable', json);
+    }
+
+    // OrdersViewV2: Get all completion rates
+    async function fetchOrderV2CompletionRates() {
+      const res = await fetch('/api/v2/sale-orders/completion-rates/');
+      const json = await res.json();
+      renderTable('orderV2CompletionRatesTable', json);
+    }
+
+    // OrdersViewV2: Get completion rate for specific order
+    document.getElementById('orderV2CompletionRateForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const orderId = this.order_id.value;
+      const res = await fetch(`/api/v2/sale-orders/${orderId}/completion-rate/`);
+      const json = await res.json();
+      renderTable('orderV2CompletionRateTable', json);
+    };
+
+    // Delete Sale Order
+    document.getElementById('deleteSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const sale_order_id = this.sale_order_id.value;
+      const res = await fetch(`/api/v1/sale-orders/${sale_order_id}/stock-exchange/`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const json = await res.json();
+      renderTable('deleteSaleOrderResponse', json);
+    };
+
+    // Delete Item Sale Order
+    document.getElementById('deleteItemSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-order-items/item_sale_order/', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('deleteItemSaleOrderResponse', json);
+    };
+
+    // Delete Stock Exchange Sale Order
+    document.getElementById('deleteStockExchangeSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-order-items/stockexchange_sale_order/', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('deleteStockExchangeSaleOrderResponse', json);
+    };
+
+    // Update Item Sale Order
+    document.getElementById('updateItemSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-order-items/item_sale_order/', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('updateItemSaleOrderResponse', json);
+    };
+
+    // Update Stock Exchange Sale Order
+    document.getElementById('updateStockExchangeSaleOrderForm').onsubmit = async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this));
+      const res = await fetch('/api/v1/sale-order-items/stockexchange_sale_order/', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      renderTable('updateStockExchangeSaleOrderResponse', json);
+    };
+
+    function renderTable(elementId, data) {
+      let html = '';
+      if (Array.isArray(data)) {
+        if (data.length === 0) {
+          html = '<p>No data found.</p>';
+        } else {
+          html = '<table><thead><tr>';
+          Object.keys(data[0]).forEach(key => {
+            html += `<th>${key}</th>`;
+          });
+          html += '</tr></thead><tbody>';
+          data.forEach(row => {
+            html += '<tr>';
+            Object.values(row).forEach(val => {
+              html += `<td>${val}</td>`;
+            });
+            html += '</tr>';
+          });
+          html += '</tbody></table>';
+        }
+      } else if (typeof data === 'object' && data !== null) {
+        html = '<table><tbody>';
+        Object.entries(data).forEach(([key, val]) => {
+          html += `<tr><th>${key}</th><td>${val}</td></tr>`;
+        });
+        html += '</tbody></table>';
+      } else {
+        html = `<p>${data}</p>`;
+      }
+      document.getElementById(elementId).innerHTML = html;
+    }
+  </script>
+</body>
+
+</html>
