@@ -23,6 +23,7 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from .models import SaleOrder, ItemSaleOrder, StockExchange
 from django.shortcuts import render, get_object_or_404
+
 from .tasks import send_email_time
 
 class OrderViewSet(viewsets.GenericViewSet):
@@ -120,7 +121,12 @@ class SaleOrderView(viewsets.GenericViewSet) :
     serializer_class_by_action = {
         "create_sale_order" : InputSaleOrderSerializer ,
         "create_bulk_items" : InputItemSaleOrderSerializer,
-        "create_bulk_stockexchange_items" : InputStockExchangeSerializer
+        "create_bulk_stockexchange_items" : InputStockExchangeSerializer ,
+        "list_sale_orders" : SaleOrderReadSerializer ,
+        "list_bulk_items" : ItemSaleOrderReadSerializer ,
+        "list_bulk_stockexchange_items" : StockExchangeReadSerializer ,
+        "delete_sale_order" : DeleteSaleOrderSerializer ,
+
     }
     def get_serializer_class(self):
         """
@@ -185,7 +191,7 @@ class SaleOrderView(viewsets.GenericViewSet) :
 
 class ItemSaleOrderViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(request_body=UpdateItemSaleOrderSerializer)
-    @action(detail=False, methods=['patch'], url_path='item_sale_order')
+    @action(detail=False, methods=['patch'], url_path='update_item_sale_order')
     def update_item_sale_order(self, request):
         serializer = UpdateItemSaleOrderSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -218,7 +224,7 @@ class ItemSaleOrderViewSet(viewsets.GenericViewSet):
             return Response({'error': f'ItemSaleOrder {sale_order_id}-{brand_item_id} not found.'}, status=status.HTTP_404_NOT_FOUND)
 class StockExchangeViewSet(viewsets.GenericViewSet):
     @swagger_auto_schema(request_body=UpdateStockExchangeSerializer)
-    @action(detail=False, methods=['patch'], url_path='stockexchange_sale_order')
+    @action(detail=False, methods=['patch'], url_path='update_stockexchange_sale_order')
     def update_stockexchange_sale_order(self, request):
         serializer = UpdateStockExchangeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
