@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demoapp-web
+  labels: { app: demoapp-web }
+spec:
+  replicas: { { .Values.replicaCount } }
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 0
+  selector:
+    matchLabels: { app: demoapp-web }
+  template:
+    metadata:
+      labels: { app: demoapp-web }
+    spec:
+      containers:
+        - name: demoapp-web-container
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: { { .Values.image.pullPolicy } }
+          ports:
+            - containerPort: { { .Values.containerPort } }
+          envFrom:
+            - secretRef: { name: { { .Values.envFromSecret } } }
+          readinessProbe:
+            httpGet: { path: /health/, port: { { .Values.containerPort } } }
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /health/, port: { { .Values.containerPort } } }
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: { { .Values.resources.requests.cpu } }
+              memory: { { .Values.resources.requests.memory } }
+            limits:
+              memory: { { .Values.resources.limits.memory } }

@@ -1,0 +1,29 @@
+image:
+  repository: us-west1-docker.pkg.dev/studied-limiter-472307-b0/demoapp
+  pullPolicy: IfNotPresent
+  tag: latest
+
+replicaCount: 2
+
+service:
+  name: demoapp
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: true
+  className: nginx
+  host: https://backend.mohammedev.cloud
+  tls:
+    enabled: false
+    secretName: demoapp-tls
+
+resources:
+  requests:
+    cpu: 150m
+    memory: 1Gi
+  limits:
+    memory: 1500Mi
+
+envFromSecret: demoapp
+containerPort: 8000
